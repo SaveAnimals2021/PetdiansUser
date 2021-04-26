@@ -12,4 +12,8 @@ public class CommonController {
     public String getMain(){
         return "/main";
     }
+
+    @GetMapping( "/testview")
+    public void getTestview(){
+    }
 }

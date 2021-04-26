@@ -22,10 +22,10 @@ public class Member{
     @Id
     private String memberID;
 
-    private String memberPW;
-    private String memberName;
-    private String memberEmail;
-    private String memberPhone;
+    private String memberpw;
+    private String membername;
+    private String memberemail;
+    private String memberphone;
 
     @CreatedDate
     @Column(name="regdate", updatable=false)

@@ -24,13 +24,27 @@
         justify-content: center;
     }
 
-    .margin-1 {
+    .buttons-between{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .margin-left-1 {
         margin-left: 1em
+    }
+
+    .margin-right-1 {
+        margin-right: 1em
     }
 
     .marginBoth-1{
         margin-left: 1em;
         margin-right: 1em;
+    }
+
+    .red-link {
+        text-decoration: none;
+        color: #FF4081 !important;
     }
 
 </style>
@@ -47,13 +61,13 @@
 
             <div class="marginBoth-1" style="padding-top: 1em">
                 <div class="title-center">
-                <h5>Personal Information</h5>
+                <h5>Pet Information</h5>
                 </div>
                 <div class="mdl-list__item mdl-list__item--two-line">
 
                 <span class="mdl-list__item-primary-content">
         <img th:src="@{/images/bg_1024.jpg}" style="width:4em">
-      <span class="margin-1">mk</span>
+      <span class="margin-left-1">mk</span>
     </span>
 
                 </div>
@@ -65,8 +79,9 @@
                         <div class="android-drawer-separator"></div>
                         <span class="mdl-list__item-primary-content">
                     <div style="display: flex; flex-direction: row">
-                      <span>Name</span><br>
-                      <span class="mdl-list__item-text-body margin-1">Mingyu Sang</span>
+                      <span class="margin-right-1">Name</span><br>
+                     <input class="mdl-textfield__input margin-left-1" type="text">
+
                     </div>
                     </span>
                     </li>
@@ -75,8 +90,9 @@
 
                     <span class="mdl-list__item-primary-content">
                     <div style="display: flex; flex-direction: row">
-                      <span>Email</span><br>
-                      <span class="mdl-list__item-text-body margin-1">mingyu@aaa.com</span>
+                      <span  class="margin-right-1">Email</span><br>
+                     <input class="mdl-textfield__input margin-left-1" type="text">
+
                     </div>
                     </span>
 
@@ -88,8 +104,9 @@
                         <div class="android-drawer-separator"></div>
                         <span class="mdl-list__item-primary-content">
                     <div style="display: flex; flex-direction: row">
-                      <span>Phone</span><br>
-                      <span class="mdl-list__item-text-body margin-1">010-1234-5678</span>
+                      <span class="margin-right-1">Phone</span><br>
+                      <input class="mdl-textfield__input margin-left-1" type="text">
+
                     </div>
                     </span>
                     </li>
@@ -97,13 +114,21 @@
                 </ul>
             </div>
 
-            <div class="mdl-card__actions">
-                <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" th:href="@{/member/modify}"
+            <div class="mdl-card__actions buttons-between">
+                <a class="red-link mdl-button mdl-js-button mdl-typography--text-uppercase" th:href="@{/member/read}"
                    data-upgraded=",MaterialButton">
-                    CHANGE INFORMATION
-                    <i class="material-icons">chevron_right</i>
+
+                    <i class="material-icons">chevron_left</i>
+                    BACK
                 </a>
+
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                    MODIFY
+                </button>
             </div>
+
+            <!-- Colored raised button -->
+
 
         </div>
 

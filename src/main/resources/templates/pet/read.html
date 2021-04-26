@@ -1,0 +1,107 @@
+<!doctype html>
+<!--
+  Material Design Lite
+  Copyright 2015 Google Inc. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<style>
+    .title-center{
+        display: flex;
+        justify-content: center;
+    }
+
+    .margin-1 {
+        margin-left: 1em
+    }
+
+    .marginBoth-1{
+        margin-left: 1em;
+        margin-right: 1em;
+    }
+
+    .test--blogpost {
+        background-image: url('../../static/images/dog.jpg');
+        width: 100%;
+    }
+
+    .height-3{
+        height:3em;
+    }
+
+</style>
+
+<th:block th:replace="~{/layout/basic :: setMainContent(~{this::content} )}">
+
+    <th:block th:fragment="content">
+
+
+
+        <div class="demo-blog__posts mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <div class="mdl-card__media mdl-color-text--grey-50 ">
+                    <h3>On the road again</h3>
+                </div>
+
+
+                <div class="mdl-color-text--grey-700 mdl-card__supporting-text">
+                    <ul class="demo-list-three mdl-list" style="width:100%; padding-bottom:0em; margin-bottom:0em">
+
+                        <li class="mdl-list__item mdl-list__item--three-line">
+                            <div class="android-drawer-separator"></div>
+                            <span class="mdl-list__item-primary-content">
+                    <div style="display: flex; flex-direction: row">
+                      <span>Species</span><br>
+                      <span class="mdl-list__item-text-body margin-1">sex</span>
+                    </div>
+                    </span>
+                        </li>
+
+                        <li class="mdl-list__item mdl-list__item--three-line">
+
+                    <span class="mdl-list__item-primary-content">
+                    <div style="display: flex; flex-direction: row">
+                      <span>Age</span><br>
+                      <span class="mdl-list__item-text-body margin-1">isNeutralized</span>
+                    </div>
+                    </span>
+
+
+                        </li>
+
+
+                    </ul>
+                </div>
+
+
+                <div class="mdl-card__actions">
+                    <a class="android-link mdl-button mdl-js-button mdl-typography--text-uppercase" th:href="@{/member/modify}"
+                       data-upgraded=",MaterialButton">
+                        CHANGE INFORMATION
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </th:block>
+</th:block>
+
+</html>

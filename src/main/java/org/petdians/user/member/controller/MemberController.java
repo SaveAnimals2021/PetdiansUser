@@ -23,4 +23,10 @@ public class MemberController {
         return "/member/read";
     }
 
+    @GetMapping("/modify")
+    public void getModify(){
+        log.info("============ GET MODIFY ============");
+    }
+
+
 }
