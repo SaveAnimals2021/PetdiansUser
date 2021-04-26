@@ -11,14 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/member")
 public class MemberController {
 
+
     @GetMapping("/login")
     public void getLogin(){
         log.info("============ GET LOGIN ============");
     }
 
-    @GetMapping("/newList")
-    public void getNewList(){
+    @GetMapping({"/read", "/"})
+    public String getNewList(){
         log.info("============ GET New List ============");
+        return "/member/read";
     }
 
 }
