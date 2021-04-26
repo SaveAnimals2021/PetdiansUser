@@ -8,12 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface AnimalRepository extends JpaRepository<MissingAnimalInfo, Integer> {
 
-    @Query(value = "select animal, member, count(r) from tbl_animal animal " +
-            "left join tbl_member member " +
-            "left outer join Reply reply on reply.animal = animal " +
-            "group by animal"
-            ,
-            countQuery = "select count (animal) from tbl_animmal animal");
-    Page<Object[]> getAnimalWithReplyCount(Pageable pageable);
+    @Query(value = "select animal from MissingAnimalInfo animal")
+    Page<Object> getAnimalWithReplyCount(Pageable pageable);
 
 }

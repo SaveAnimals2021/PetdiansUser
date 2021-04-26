@@ -2,8 +2,7 @@ package org.petdians.user.animal.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -11,10 +10,13 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@ToString
+@Table(name="tbl_animal")
 public class MissingAnimalInfo {
 
     @Id
-    private Integer animalNumber;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer animalnumber;
 
     private String animalCode;
     private String serviceName;
