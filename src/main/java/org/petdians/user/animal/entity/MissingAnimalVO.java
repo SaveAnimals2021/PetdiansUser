@@ -12,11 +12,11 @@ import java.util.Date;
 @Getter
 @ToString
 @Table(name="tbl_animal")
-public class MissingAnimalInfo {
+public class MissingAnimalVO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer animalnumber;
+    private Integer animalNumber;
 
     private String animalCode;
     private String serviceName;
@@ -34,7 +34,7 @@ public class MissingAnimalInfo {
     private String imageType;
 
     // redirect할수 있는 원래 사이트
-    private String originURL;
+    private String originUrl;
 
     private Date missingDate;
     private String missingLocation;

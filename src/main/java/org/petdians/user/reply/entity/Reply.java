@@ -1,7 +1,7 @@
 package org.petdians.user.reply.entity;
 
 import lombok.*;
-import org.petdians.user.animal.entity.MissingAnimalInfo;
+import org.petdians.user.animal.entity.MissingAnimalVO;
 import org.petdians.user.common.entity.BaseEntity;
 import org.petdians.user.member.entity.Member;
 
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString(exclude = {"missingAnimalInfo", "member"})
+@ToString(exclude = {"missingAnimalVO", "member"})
 @Table(name="tbl_reply")
 public class Reply extends BaseEntity {
 
@@ -23,7 +23,7 @@ public class Reply extends BaseEntity {
     private String text;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private MissingAnimalInfo missingAnimalInfo;
+    private MissingAnimalVO missingAnimalVO;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
