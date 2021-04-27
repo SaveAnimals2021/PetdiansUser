@@ -26,7 +26,7 @@ public class AnimalServiceImpl implements AnimalService{
     @Override
     public PageResultDTO<MissingAnimalDTO, Object[]> getList(PageRequestDTO pageRequestDTO) {
 
-        Pageable pageable = pageRequestDTO.getPageable(Sort.by("animalNumber").descending());
+        Pageable pageable = pageRequestDTO.getPageable(Sort.by("pno").descending());
 
         Page<Object> result = animalRepository.getAnimalWithReplyCount(pageable);
 

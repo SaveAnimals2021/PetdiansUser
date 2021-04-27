@@ -12,8 +12,10 @@ import org.springframework.data.domain.Sort;
 @Data
 public class PageRequestDTO {
 
-    private int page;
-    private int size;
+    @Builder.Default
+    private int page = 1;
+    @Builder.Default
+    private int size = 10;
     private String type;
     private String keyword;
 

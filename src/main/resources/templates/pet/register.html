@@ -1,0 +1,398 @@
+<!doctype html>
+<!--
+  Material Design Lite
+  Copyright 2015 Google Inc. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<style>
+    .my-text-center {
+        text-align: center;
+    }
+
+    .title-center {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .buttons-between {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .row-between {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .margin-left-1 {
+        margin-left: 1em
+    }
+
+    .margin-right-1 {
+        margin-right: 1em
+    }
+
+    .marginBoth-1 {
+        margin-left: 1em;
+        margin-right: 1em;
+    }
+
+    .red-link {
+        text-decoration: none;
+        color: #FF4081 !important;
+    }
+
+</style>
+
+<th:block th:replace="~{/layout/basic :: setMainContent(~{this::content} )}">
+
+    <th:block th:fragment="content">
+
+
+        <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
+
+
+            <div class="marginBoth-1" style="padding-top: 1em">
+                <div class="title-center">
+                    <h4>Register Your Pet!</h4>
+                </div>
+
+
+                <form th:action="@{/pet/register}" th:method="post" class="petForm">
+                    <ul class="demo-list-three mdl-list" style="width:100%; padding-bottom:0em; margin-bottom:0em">
+                        <div class="android-drawer-separator"></div>
+                        <li class="mdl-list__item mdl-list__item--three-line">
+                            <div class="android-drawer-separator"></div>
+                            <span class="mdl-list__item-primary-content">
+                           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" name="petname">
+                        <label class="mdl-textfield__label" for="sample3">Pet Name</label>
+                    </div>
+                    </span>
+                        </li>
+
+                        <li class="mdl-list__item mdl-list__item--three-line">
+
+                    <span class="mdl-list__item-primary-content">
+                          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" name="type">
+                        <label class="mdl-textfield__label" for="sample3">Type</label>
+                    </div>
+                    </span>
+
+
+                        </li>
+
+                        <li class="mdl-list__item mdl-list__item--three-line">
+
+                    <span class="mdl-list__item-primary-content">
+                           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" name="species">
+                        <label class="mdl-textfield__label" for="sample3">Species</label>
+                    </div>
+                    </span>
+
+
+                        </li>
+
+
+                        <li class="mdl-list__item mdl-list__item--three-line">
+                            <div class="android-drawer-separator"></div>
+                            <span class="mdl-list__item-primary-content">
+                          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" name="age">
+                        <label class="mdl-textfield__label" for="sample3">Age</label>
+                    </div>
+                    </span>
+                        </li>
+
+                        <li class="mdl-list__item mdl-list__item--three-line">
+
+                    <span class="mdl-list__item-primary-content">
+                     <div class="row-between">
+                         <div>
+                                Sex
+                         </div>
+                         <div>
+                            <input type="radio" id="option-id1" class="mdl-radio__button " name="sex" value="1">
+                            <span class="mdl-radio__label">Male</span>
+
+
+                            <input type="radio" id="option-id2" class="mdl-radio__button " name="sex" value="0">
+                            <span class="mdl-radio__label">Female</span>
+                         </div>
+                    </div>
+
+                    </span>
+
+                        </li>
+
+                        <li class="mdl-list__item mdl-list__item--three-line">
+                    <span class="mdl-list__item-primary-content">
+                    <div style="display: flex; flex-direction: row">
+                      <span class="margin-right-1">Neutralized?</span><br>
+                     <input class="mdl-checkbox mdl-js-ripple-effect margin-left-1" type="checkbox" name="isNeutralized">
+                    </div>
+                    </span>
+
+                        </li>
+
+                    </ul>
+                    <input id='fileid' type='file' multiple hidden/>
+                </form>
+
+
+                <div class="title-center">
+                    <h5 class="my-text-center">ADD YOUR PET IMAGE</h5>
+
+                    <div class="uploadResult">
+                        <ul class="title-center">
+
+                        </ul>
+                    </div>
+
+
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored uploadButton">
+                        <i class="material-icons">add</i>
+                    </button>
+
+
+
+                </div>
+
+            </div>
+
+            <div class="mdl-card__actions buttons-between">
+                <a class="red-link mdl-button mdl-js-button mdl-typography--text-uppercase" th:href="@{/member/read}"
+                   data-upgraded=",MaterialButton">
+
+                    <i class="material-icons">chevron_left</i>
+                    BACK
+                </a>
+
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect registerButton">
+                    Register
+                </button>
+            </div>
+
+            <!-- Colored raised button -->
+
+
+        </div>
+
+
+        <script>
+
+            var fileInput = document.getElementById('fileid');
+
+            //==============================
+            // 확장자 확인 함수
+            //==============================
+            var regex = new RegExp("(.*?)\.(exe|sh|zip|alz|tiff)$");
+            var maxSize = 10485760; //10MB
+
+            function checkExtension(fileName, fileSize) {
+
+                if (fileSize >= maxSize) {
+                    alert("파일 사이즈 초과");
+                    return false;
+                }
+
+                if (regex.test(fileName)) {
+                    alert("해당 종류의 파일은 업로드할 수 없습니다.");
+                    return false;
+                }
+                return true;
+            }
+
+            //==============================
+            // 업로드 결과 보여주기 함수
+            //==============================
+            function showResult(uploadResultArr) {
+
+                var uploadUL = document.querySelector(".uploadResult ul");
+
+                var str = "";
+
+                console.log(uploadResultArr);
+
+                uploadResultArr.forEach(function (obj) {
+
+                    str += "<li class='mdl-list__item' data-name='" + obj.fileName + "' data-path='" + obj.folderPath + "' data-uuid='" + obj.uuid + "'>";
+                    str + " <div class='row-between'>";
+                    str += "<img src='/pet/display?fileName=" + obj.thumbnailURL + "'>";
+                    str += "<button type='button' data-file=\'" + obj.imageURL + "\' "
+                    str += "class='mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab'> <i class='material-icons'>close</i></button><br>";
+                    str += "</div>";
+                    str + "</li>";
+                });
+
+                uploadUL.insertAdjacentHTML("beforeend", str);
+            }
+
+            //==============================
+            // 업로드 버튼 클릭 함수
+            //==============================
+            function openDialog() {
+                fileInput.click();
+            }
+
+            //===============================
+            // Upload Ajax 함수
+            //===============================
+            function uploadAjax(data) {
+                return fetch("/pet/uploadAjax", {
+                    method: 'post',
+                    body: data
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error(response);
+                    }
+
+                    console.log("UPLOAD SUCCESSFUL");
+
+                    return response.json()
+                }).catch(error => {
+                    console.log("ERROR : " + error);
+                    return error;
+                })
+            }
+
+            //===============================
+            // UploadButton 누르면 파일 추가 가능
+            //===============================
+            document.querySelector('.uploadButton').addEventListener('click', openDialog);
+
+            //===============================
+            // FileInput 결과
+            //===============================
+            fileInput.addEventListener('change', function (e) {
+
+                console.log("FILE INPUT CHANGE");
+                console.dir(fileInput);
+
+                var formData = new FormData();
+                var files = fileInput.files;
+                var appended = false;
+
+                for (var i = 0; i < files.length; i++) {
+
+                    if (!checkExtension(files[i].name, files[i].size)) {
+                        return false;
+                    }
+
+                    console.log(files[i]);
+                    formData.append("uploadFiles", files[i]);
+                    appended = true;
+                }
+
+                //upload를 하지 않는다.
+                if (!appended) {
+                    return;
+                }
+
+                var result = uploadAjax(formData)
+
+                console.log(result);
+
+                result.then(json => {
+                    console.log(json);
+                    showResult(json);
+                })
+
+            }, false);
+
+            document.querySelector('.uploadResult').addEventListener("click", function (e) {
+
+                console.log("DELETE FILE");
+                var target = e.target;
+
+                console.log("tagName : " + target.tagName);
+                console.log(target.tagName);
+
+                var tagName = target.tagName
+
+                var button;
+                var list;
+
+                if ('I' == tagName) {
+                    button = target.closest("button")
+                } else if ('BUTTON' == tagName) {
+                    button = target;
+                } else {
+                    return;
+                }
+
+                list = target.closest("li");
+
+                var file = button.getAttribute("data-file");
+
+                console.log(file);
+
+                fetch("/pet/removeFile?fileName=" + file, {
+                    method: 'post'
+                }).then(response => {
+                    if (!response.ok) {
+
+                        throw new Error(response);
+                    }
+
+                    console.log("REMOVE SUCCESSFUL");
+                    list.remove();
+                    return response
+                }).catch(error => {
+                    console.log("ERROR : " + error);
+                    return error;
+                })
+
+            });
+
+            document.querySelector(".registerButton").addEventListener("click", function (e) {
+                e.preventDefault();
+
+                var str = "";
+
+                let i = 0;
+                document.querySelectorAll(".uploadResult li").forEach(function(obj){
+                    var target = obj;
+
+                    str += "<input type='hidden' name='petImageDTOList["+i+"].fileName' value='"+target.getAttribute('data-name') +"'>";
+
+                    str += "<input type='hidden' name='petImageDTOList["+i+"].uploadPath' value='"+target.getAttribute('data-path')+"'>";
+
+                    str += "<input type='hidden' name='petImageDTOList["+i+"].uuid' value='"+target.getAttribute('data-uuid')+"'>";
+                    ++i;
+                });
+
+                var petForm = document.querySelector(".petForm");
+
+                petForm.insertAdjacentHTML("beforeend", str);
+                console.log(str);
+
+                petForm.submit();
+
+            }, false)
+
+        </script>
+
+
+    </th:block>
+</th:block>
+
+</html>
