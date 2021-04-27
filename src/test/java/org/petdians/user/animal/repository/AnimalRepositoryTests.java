@@ -19,12 +19,15 @@ public class AnimalRepositoryTests {
     @Autowired
     private AnimalRepository animalRepository;
 
+    @Autowired
+    private ImageRepository imageRepository;
+
     @Test
     public void testGetAnimalWithReplyCount() {
 
         Pageable pageable = PageRequest.of(0,10, Sort.by("animalnumber").descending());
 
-        Page<Object> result = animalRepository.getAnimalWithReplyCount(pageable);
+        Page<Object[]> result = animalRepository.getAnimalWithReplyCount(pageable);
 
         result.get().forEach(arr -> log.info(arr));
 

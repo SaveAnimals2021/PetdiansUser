@@ -8,7 +8,11 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface AnimalRepository extends JpaRepository<MissingAnimalVO, Integer> {
 
-    @Query(value = "select animal from MissingAnimalVO animal")
-    Page<Object> getAnimalWithReplyCount(Pageable pageable);
+    @Query("select animal, min(image) from MissingAnimalVO animal " +
+            "left join ImageVO image on image.missingAnimalVO = animal " +
+            "where animal.rescueStatus = 0 group by animal")
+    Page<Object[]> getAnimalWithReplyCount(Pageable pageable);
+
+
 
 }

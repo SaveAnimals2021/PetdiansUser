@@ -18,35 +18,156 @@
 
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+<style>
+
+    .animalPagination{
+
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+    }
+
+    .page-item{
+
+        color: white;
+        text-decoration:none;
+
+    }
+
+    .pageBtn {
+
+        /*color: #fff;*/
+        /*background-color: mediumslateblue;*/
+
+        /*background: 0 0;*/
+        border: none;
+        border-radius: 2px;
+        /*position: relative;*/
+        /*height: 36px;*/
+        margin: 5px;
+        /*max-width: 20px;*/
+        /*min-width: 20px;*/
+        /*padding: 0 16px;*/
+        /*display: inline-block;*/
+        /*font-family: "Roboto","Helvetica","Arial",sans-serif;*/
+        font-size: 15px;
+        /*font-weight: 500;*/
+        /*text-transform: uppercase;*/
+        /*letter-spacing: 0;*/
+        /*overflow: hidden;*/
+        /*will-change: box-shadow;*/
+        /*transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1);*/
+        /*outline: none;*/
+        /*cursor: pointer;*/
+        /*text-decoration: none;*/
+        /*text-align: center;*/
+        /*line-height: 36px;*/
+        /*vertical-align: middle;*/
+
+    }
+
+</style>
+
 <th:block th:replace="~{/layout/basic :: setMainContent(~{this::content} )}">
 
     <th:block th:fragment="content">
 
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Title</th>
-                <th scope="col">Writer</th>
-                <th scope="col">Regdate</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="dto : ${list.dtoList}" >
-                <th scope="row">
-                    <a th:href="@{/board/read(bno = ${dto.bno},
-                    page= ${result.page},
+        <main class="mdl-layout__content">
+            <div style="margin-left: 8px; margin-top: 8px;">
+                <button class="registerBtn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" style="background-color: #00bfa5; margin: 8px;">
+                    <a class="page-link" th:href="@{/animal/register}" tabindex="-1" style="color: white; text-decoration:none;">Register</a>
+                </button>
+            </div>
+
+            <div class="mdl-grid portfolio-max-width">
+                <!--                                          Card                                                  -->
+                <!--/*@thymesVar id="list" type=""*/-->
+                <div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card" th:each="dto : ${result.dtoList}">
+                    <div class="mdl-card__media">
+<!--                        |/animalImages/display?fileName=${dto.imageDTOList[0].getURL()}|-->
+                        <img class="article-image" th:src="@{/images/logo2.png}" border="0" alt="">
+                    </div>
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">[[${dto.name}]]</h2>
+                    </div>
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">[[${dto.animalNumber}]]</h2>
+                    </div>
+                    <div class="mdl-card__supporting-text">
+
+                    </div>
+                    <div class="mdl-card__actions mdl-card--border">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent" style="justify-content: center; width: 90%" href="#">Read more</a>
+                    </div>
+                </div>
+                <!--                                         End Card                                                  -->
+            </div>
+            <!--                                          Pagination                                                  -->
+            <div class="animalPagination">
+                <button class="pageBtn"
+                        style="background-color: mediumslateblue; " th:if="${result.prev}">
+                    <a class="page-item" th:href="@{/animal/list(page= ${result.start -1},
                     type=${pageRequestDTO.type} ,
-                    keyword = ${pageRequestDTO.keyword})}">
-                        [[${dto.bno}]]
+                    keyword = ${pageRequestDTO.keyword} ) }" tabindex="-1">Previous</a>
+                </button>
+
+                <button
+                        style="background-color: mediumslateblue; "
+                        th:class="'pageBtn ' + ${result.page == page?'active':''} " th:each="page: ${result.pageList}">
+                    <a class="page-item" th:href="@{/animal/list(page = ${page} ,
+                   type=${pageRequestDTO.type} ,
+                   keyword = ${pageRequestDTO.keyword}  )}">
+                        [[${page}]]
                     </a>
-                </th>
-                <td>[[${dto.title}]] ----------------  [<b th:text="${dto.replyCount}"></b>]</td>
-                <td>[[${dto.writerName}]] <small>[[${dto.writerEmail}]]</small> </td>
-                <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
-            </tr>
-            </tbody>
-        </table>
+                </button>
+
+                <button class="pageBtn"
+                        style="background-color: mediumslateblue; " th:if="${result.next}">
+                    <a class="page-item" th:href="@{/animal/list(page= ${result.end + 1} ,
+                    type=${pageRequestDTO.type} ,
+                    keyword = ${pageRequestDTO.keyword} )}">Next</a>
+                </button>
+            </div>
+            <!--                                         End Pagination                                                  -->
+        </main>
+
+
+<!--        &lt;!&ndash;                                          Modal                                                  &ndash;&gt;-->
+<!--        <div class="modal" tabindex="-1" role="dialog">-->
+<!--            <div class="modal-dialog" role="document">-->
+<!--                <div class="modal-content">-->
+<!--                    <div class="modal-header">-->
+<!--                        <h5 class="modal-title">Modal title</h5>-->
+<!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                            <span aria-hidden="true">&times;</span>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    <div class="modal-body">-->
+<!--                        <p>Modal body text goes here.</p>-->
+<!--                    </div>-->
+<!--                    <div class="modal-footer">-->
+<!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash;                                         End Modal                                                  &ndash;&gt;-->
+
+        <script>
+
+            const registerBtn = document.querySelector(".registerBtn");
+            registerBtn.addEventListener("click", function (e) {
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                window.location=registerBtn.querySelector("a").getAttribute("href");
+
+            } ,false)
+
+        </script>
 
     </th:block>
 </th:block>

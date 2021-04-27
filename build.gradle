@@ -41,6 +41,11 @@ dependencies {
 
     // QueryDSL 추가됨
     implementation 'com.querydsl:querydsl-jpa'
+
+    //썸네일
+    // https://mvnrepository.com/artifact/net.coobird/thumbnailator
+    implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.14'
+
 }
 
 test {
