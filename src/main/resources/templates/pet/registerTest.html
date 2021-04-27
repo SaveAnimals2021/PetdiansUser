@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UPLOAD</title>
+</head>
+<body>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<h1>UPLOAD</h1>
+
+<input type="file" name="uploadFiles" multiple>
+<button class="uploadButton">UPLOAD</button>
+
+
+<script>
+
+    const headers = {
+        headers : { 'Content-Type' : 'multipart/form-data'}
+    }
+
+    document.querySelector(".uploadButton").addEventListener("click", function(){
+
+        const formData = new FormData();
+        const input = document.querySelector("input");
+
+        console.dir(input);
+
+        const files = input.files;
+        //
+        // FormData 추가
+        for(var i = 0; i < files.length; ++i){
+            formData.append("uploadFiles", files[i]);
+        }
+
+        // AJAX
+        axios.post("/pet/uploadAjax", formData, headers
+        ).then((response)=>{
+
+        }).catch((error)=>{
+            alert("ERROR");
+        })
+
+
+    }, false)
+
+</script>
+
+
+</body>
+</html>

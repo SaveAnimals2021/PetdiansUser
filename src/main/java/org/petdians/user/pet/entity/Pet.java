@@ -22,21 +22,21 @@ import java.time.LocalDateTime;
 public class Pet {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long pno;
 
-    String userid;
     String petname;
 
     String species;
     Integer sex;
     Boolean isNeutralized;
-    Integer age;
+    String age;
     String type;
 
-    String fullPath;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
-    Member member;
+    private Member member;
 
     @CreatedDate
     @Column(name="regdate", updatable=false)
@@ -46,5 +46,6 @@ public class Pet {
     @LastModifiedDate
     @Column(name="updatedate")
     protected LocalDateTime updatedate;
+
 
 }
