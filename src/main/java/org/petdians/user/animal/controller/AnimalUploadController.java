@@ -18,7 +18,7 @@ import java.nio.file.Files;
 @RestController
 @RequestMapping("/animalImages")
 @Log4j2
-public class UploadController {
+public class AnimalUploadController {
 
     @Value("${org.petdians.upload.path}")
     private String uploadPath;
@@ -29,6 +29,7 @@ public class UploadController {
         ResponseEntity<byte[]> result = null;
 
         try {
+
             String srcFileName =  URLDecoder.decode(fileName,"UTF-8");
 
             log.info("fileName: " + srcFileName);

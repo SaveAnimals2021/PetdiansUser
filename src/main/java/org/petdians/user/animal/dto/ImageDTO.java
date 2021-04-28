@@ -29,4 +29,15 @@ public class ImageDTO {
 
     }
 
+    public String getThumbnailURL() {
+
+        try {
+            return URLEncoder.encode(uploadPath+"\\"+ "s_" + fileName,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return "";
+
+    }
+
 }

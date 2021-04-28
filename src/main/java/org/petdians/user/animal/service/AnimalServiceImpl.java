@@ -7,6 +7,7 @@ import org.petdians.user.animal.dto.MissingAnimalDTO;
 import org.petdians.user.animal.entity.ImageVO;
 import org.petdians.user.animal.entity.MissingAnimalVO;
 import org.petdians.user.animal.repository.AnimalRepository;
+import org.petdians.user.animal.repository.ImageRepository;
 import org.petdians.user.common.dto.PageRequestDTO;
 import org.petdians.user.common.dto.PageResultDTO;
 import org.springframework.data.domain.Page;
@@ -14,9 +15,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 @Service
@@ -25,6 +28,8 @@ import java.util.function.Function;
 public class AnimalServiceImpl implements AnimalService{
 
     private final AnimalRepository animalRepository;
+
+    private final ImageRepository imageRepository;
 
     @Override
     public PageResultDTO<MissingAnimalDTO, Object[]> getList(PageRequestDTO pageRequestDTO) {
@@ -43,6 +48,24 @@ public class AnimalServiceImpl implements AnimalService{
     @Override
     public Page<Object[]> getAnimalList(Pageable pageable) {
         return animalRepository.getAnimalWithReplyCount(pageable);
+    }
+
+    @Override
+    @Transactional
+    public Integer register(MissingAnimalDTO missingAnimalDTO) {
+
+        Map<String, Object> entityMap = dtoToEntity(missingAnimalDTO);
+        MissingAnimalVO missingAnimalVO = (MissingAnimalVO) entityMap.get("missingAnimalVO");
+        List<ImageVO> imageVOList = (List<ImageVO>) entityMap.get("imgList");
+
+        animalRepository.save(missingAnimalVO);
+
+        imageVOList.forEach(imageVO -> {
+            imageRepository.save(imageVO);
+        });
+
+        return missingAnimalVO.getAnimalNumber();
+
     }
 
 }

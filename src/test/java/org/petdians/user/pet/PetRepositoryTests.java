@@ -133,7 +133,7 @@ public class PetRepositoryTests {
         PetImage i2 = (PetImage)result[1];
 
         log.info(i1);
-        log.info(i2);==
+        log.info(i2);
     }
 
 }

@@ -10,8 +10,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
 @Table(name="tbl_image")
+@ToString(exclude = "missingAnimalVO")
 public class ImageVO {
 
     @Id

@@ -54,61 +54,71 @@
                     <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" style="background-color: mediumslateblue">
                         Check Missing Location
                     </button>
-                    <form action="#" class="actionForm">
+                    <form th:action="@{/animal/register}" th:method="post" class="actionForm">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="MissingLocation">
+                            <input name="missingLocation" class="mdl-textfield__input" type="text" id="MissingLocation">
                             <label class="mdl-textfield__label" for="MissingLocation">MissingLocation</label>
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="MissingDate">
+                            <input name="missingDate" class="mdl-textfield__input" type="text" id="MissingDate">
                             <label class="mdl-textfield__label" for="MissingDate">MissingDate - ex) 2021-04-27</label>
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" pattern="[A-Z,a-z, ]*" type="text" id="Type">
+                            <input name="type" class="mdl-textfield__input" pattern="[A-Z,a-z, ]*" type="text" id="Type">
                             <label class="mdl-textfield__label" for="Type">Type</label>
                             <span class="mdl-textfield__error">Letters and spaces only</span>
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" pattern="[A-Z,a-z, ]*" type="text" id="Name">
+                            <input name="name" class="mdl-textfield__input" pattern="[A-Z,a-z, ]*" type="text" id="Name">
                             <label class="mdl-textfield__label" for="Name">Name</label>
                             <span class="mdl-textfield__error">Letters and spaces only</span>
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="Species">
+                            <input name="species" class="mdl-textfield__input" type="text" id="Species">
                             <label class="mdl-textfield__label" for="Species">Species</label>
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="Sex">
+                            <input name="sex" class="mdl-textfield__input" type="text" id="Sex">
                             <label class="mdl-textfield__label" for="Sex">Sex</label>
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="Age">
+                            <input name="age" class="mdl-textfield__input" type="text" id="Age">
                             <label class="mdl-textfield__label" for="Age">Age</label>
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="Color">
+                            <input name="color" class="mdl-textfield__input" type="text" id="Color">
                             <label class="mdl-textfield__label" for="Color">Color</label>
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="PhoneNumber">
+                            <input name="phoneNumber" class="mdl-textfield__input" type="text" id="PhoneNumber">
                             <label class="mdl-textfield__label" for="PhoneNumber">PhoneNumber</label>
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="GuardianName">
+                            <input name="guardianName" class="mdl-textfield__input" type="text" id="GuardianName">
                             <label class="mdl-textfield__label" for="GuardianName">GuardianName</label>
                         </div>
-                            <input class="mdl-textfield__input" type="hidden" value="0" id="rescueStatus">
+                            <input name="rescueStatus" class="mdl-textfield__input" type="hidden" value="0" id="RescueStatus">
+                            <input name="isCompleted" class="mdl-textfield__input" type="hidden" value="0" id="IsCompleted">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <textarea class="mdl-textfield__input" type="text" rows="5" id="Situation"></textarea>
+                            <textarea name="special" class="mdl-textfield__input" type="text" rows="5" id="Special"></textarea>
+                            <label class="mdl-textfield__label" for="Special">Special</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <textarea name="situation" class="mdl-textfield__input" type="text" rows="5" id="Situation"></textarea>
                             <label class="mdl-textfield__label" for="Situation">Situation</label>
                         </div>
 
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="align-content: revert">
-                            <input class="uploadFiles mdl-textfield__input" type="file" id="uploadFiles">
+<!--                        <div class="mdl-textfield mdl-js-textfield mdl-textfield&#45;&#45;floating-label" style="align-content: revert">-->
+<!--                            <input class="uploadFiles mdl-textfield__input" type="file" id="uploadFiles">-->
+<!--                        </div>-->
+                        <div class="imgBox">
+
                         </div>
+
+
                         <p>
                             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
-                                Submit
+                                Register
                             </button>
                             <button class="listBtn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" style="background-color: #00bfa5">
                                 <a class="page-link" th:href="@{/animal/list}" tabindex="-1" style="color: white; text-decoration:none;">List</a>
