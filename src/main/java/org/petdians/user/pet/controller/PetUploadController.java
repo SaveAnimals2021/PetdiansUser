@@ -30,7 +30,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/pet")
 @Log4j2
-public class UploadController {
+public class PetUploadController {
 
     private String uploadPath = "C:\\upload";
 

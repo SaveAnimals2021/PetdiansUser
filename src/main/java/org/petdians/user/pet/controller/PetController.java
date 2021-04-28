@@ -25,14 +25,39 @@ public class PetController {
 
     @GetMapping("/list")
     public void getList(Model model){
-        List<PetDTO> petDTOList = petService.getPetsByMemberID("mk");
+        List<PetDTO> petDTOList = petService.getPetsAndImagesByMemberID("mk");
 
-        model.addAttribute("list", petDTOList);
+        model.addAttribute("result", petDTOList);
     }
 
     @GetMapping("/read")
-    public void getRead(){
+    public void getRead(Long pno, Model model){
+        log.info("pno: " + pno);
 
+        PetDTO petDTO = petService.getPet(pno);
+
+        model.addAttribute("petDTO", petDTO);
+    }
+
+    @GetMapping("/modify")
+    public void getModify(Long pno, Model model){
+        log.info("pno: " + pno);
+
+        PetDTO petDTO = petService.getPet(pno);
+
+        model.addAttribute("petDTO", petDTO);
+    }
+
+    @PostMapping("/modify")
+    public String postModify(PetDTO petDTO, RedirectAttributes redirectAttributes){
+        log.info("========== modify pet ===========");
+        log.info("petDTO: " + petDTO);
+        petDTO.setMember(Member.builder().memberID("mk").build());
+       //  Long pno = petService.register(petDTO);
+
+        // redirectAttributes.addFlashAttribute("msg", pno);
+
+        return "redirect:/pet/read?pno="+311;
     }
 
     @GetMapping("/register")

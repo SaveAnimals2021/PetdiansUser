@@ -20,9 +20,25 @@ public interface PetService {
 
     List<PetDTO> getPetsByMemberID(String memberid);
 
+    List<PetDTO> getPetsAndImagesByMemberID(String memberid);
+
+    PetDTO getPet(Long pno);
+
+    default PetImageDTO entityToImageDTO(PetImage image){
+        return PetImageDTO.builder().fileName(image.getFileName())
+                .pino(image.getPino())
+                .regDate(image.getRegDate())
+                .uploadPath(image.getUploadPath())
+                .uuid(image.getUuid())
+                .pino(image.getPino())
+                .updateDate(image.getUpdateDate())
+                .build();
+    }
+
     default PetDTO entityToDTO(Pet pet, Long imageCount){
         return PetDTO.builder()
                 .pno(pet.getPno())
+                .petname(pet.getPetname())
                 .regDate(pet.getRegdate())
                 .updateDate(pet.getUpdatedate())
                 .age(pet.getAge())
@@ -35,10 +51,26 @@ public interface PetService {
                 .build();
     }
 
+    default PetDTO entityToDTO(Pet pet){
+        return PetDTO.builder()
+                .pno(pet.getPno())
+                .petname(pet.getPetname())
+                .regDate(pet.getRegdate())
+                .updateDate(pet.getUpdatedate())
+                .age(pet.getAge())
+                .sex(pet.getSex())
+                .member(pet.getMember())
+                .isNeutralized(pet.getIsNeutralized())
+                .species(pet.getSpecies())
+                .type(pet.getType())
+                .build();
+    }
+
 
     default PetDTO entitiesToDTO(Pet pet, List<PetImage> petImages){
         PetDTO petDTO = PetDTO.builder()
                 .pno(pet.getPno())
+                .petname(pet.getPetname())
                 .regDate(pet.getRegdate())
                 .updateDate(pet.getUpdatedate())
                 .age(pet.getAge())
@@ -75,6 +107,7 @@ public interface PetService {
 
         Pet pet = Pet.builder()
                 .pno(petDTO.getPno())
+                .petname(petDTO.getPetname())
                 .regdate(petDTO.getRegDate())
                 .updatedate(petDTO.getUpdateDate())
                 .age(petDTO.getAge())
