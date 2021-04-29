@@ -17,12 +17,32 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
 
 
 
+    // 펫과 모든 이미지
+    @Query(value = "select p, pi from Pet p " +
+            "left join PetImage  pi On pi.pet = p " +
+            "where p.pno = :pno")
+    Object[] getPetAndImages(Long pno);
+
+
+
     @Query(value = "select p, count(pi) from Pet p " +
             "inner join p.member m " +
             "left join PetImage  pi On pi.pet = p " +
             "where m.memberID = :memberid " +
             "group by p", countQuery = "select count(p) from Pet p")
     Object[] getPetsByMemberID(String memberid);
+
+
+
+
+    // 모든 펫과 대표 이미지
+    @Query(value = "select p, pi from Pet p " +
+            "inner join p.member m " +
+            "left join PetImage  pi On pi.pet = p " +
+            "where m.memberID = :memberid and " +
+            "pi.isMain = true " +
+            "group by p")
+    Object[] getPetsAndImagesByMemberID(String memberid);
 
 
 }

@@ -42,13 +42,20 @@ public class PetServiceTests {
 
     @Test
     public void testGetPetsByMemberID(){
-        List<PetDTO> result = petService.getPetsByMemberID("mk");
+        List<PetDTO> result = petService.getPetsAndImagesByMemberID("mk");
 
         result.forEach(pet->{
             log.info(pet);
+            log.info(pet.getPetImageDTOList());
         });
     }
 
+    @Test
+    public void testGetPet(){
+        PetDTO dto = petService.getPet(311L);
+
+        log.info(dto);
+    }
 
 
 }

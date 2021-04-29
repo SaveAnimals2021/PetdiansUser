@@ -41,6 +41,27 @@ public class PetRepositoryTests {
 
     }
 
+    // petimage 인서트 테스트
+    @Test
+    public void testInsertImage(){
+
+        Pet pet = Pet.builder().pno(8L).build();
+
+        String uuid = UUID.randomUUID().toString();
+        PetImage image = PetImage.builder()
+                .uuid("73afebbe-f249-427d-8793-0cbfa5f5bab4")
+                .pet(pet)
+                .fileName("1280px-Tomcat-logo.svg.png")
+                .uploadPath("2021/04/28")
+                .isMain(true)
+                .build();
+
+        // 73afebbe-f249-427d-8793-0cbfa5f5bab4_1280px-Tomcat-logo.svg.png
+
+        petImageRepository.save(image);
+    }
+
+
     @Test
     @Transactional
     @Commit
@@ -132,8 +153,47 @@ public class PetRepositoryTests {
         PetImage i1 = (PetImage)result[0];
         PetImage i2 = (PetImage)result[1];
 
+
+
         log.info(i1);
         log.info(i2);
+
+    }
+
+    @Test
+    public void testGetPetsAndImagesByMemberID(){
+        String memberID = "mk";
+
+        Object[] result = petRepository.getPetsAndImagesByMemberID(memberID);
+
+        log.info("result.length : " + result.length);
+
+        for(int i = 0; i < result.length; ++i){
+            log.info( Arrays.toString(result) );
+
+            Object[] arr = (Object[])result[i];
+            log.info(arr[0]);
+            log.info(arr[1]);
+            log.info(arr[2]);
+            log.info("============================");
+        }
+    }
+
+    @Test
+    public void test_getPetAndImages(){
+        Object[] result = petRepository.getPetAndImages(311L);
+
+
+
+        for(int i = 0; i < result.length; ++i){
+            log.info( Arrays.toString(result) );
+
+            Object[] arr = (Object[])result[i];
+            log.info(arr[0]);
+            log.info(arr[1]);
+
+            log.info("============================");
+        }
     }
 
 }
