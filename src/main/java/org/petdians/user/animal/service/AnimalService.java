@@ -27,8 +27,6 @@ public interface AnimalService {
 
 
 
-
-
     default Map<String, Object> dtoToEntity(MissingAnimalDTO dto){
 
         Map<String, Object> entityMap = new HashMap<>();
@@ -37,26 +35,45 @@ public interface AnimalService {
 
         Date missingDate = null;
         Date rescueDate = null;
-        Date regDate = null;
-        Date updateDate = null;
+//        Date regDate = null;
+//        Date updateDate = null;
 
         try {
 
-           missingDate = format.parse(dto.getMissingDate());
-            rescueDate = format.parse(dto.getRescueDate());
-            regDate = format.parse(dto.getRegDate());
-            updateDate = format.parse(dto.getUpdateDate());
+            switch (dto.getRescueStatus()) {
+                case 0: missingDate = format.parse(dto.getMissingDate());
+                    break;
+                case 1: rescueDate = format.parse(dto.getRescueDate());
+                    break;
+                case 2: rescueDate = format.parse(dto.getRescueDate());
+                    break;
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         MissingAnimalVO missingAnimalVO = MissingAnimalVO.builder()
-                .animalNumber(dto.getAnimalNumber()).animalCode(dto.getAnimalCode()).type(dto.getType()).serviceName(dto.getServiceName())
-                .name(dto.getName()).species(dto.getSpecies()).sex(dto.getSex()).age(dto.getAge()).situation(dto.getSituation())
-                .special(dto.getSpecial()).color(dto.getColor()).missingDate(missingDate).regDate(regDate).updateDate(updateDate)
-                .originUrl(dto.getOriginURL()).missingLocation(dto.getMissingLocation()).rescueLocation(dto.getRescueLocation()).rescueDate(rescueDate)
-                .rescueStatus(dto.getRescueStatus()).bno(dto.getBno()).guardianName(dto.getGuardianName()).phoneNumber(dto.getPhoneNumber()).isCompleted(dto.getIsCompleted())
+                .animalNumber(dto.getAnimalNumber())
+                .animalCode(dto.getAnimalCode())
+                .type(dto.getType())
+                .serviceName(dto.getServiceName())
+                .name(dto.getName())
+                .species(dto.getSpecies())
+                .sex(dto.getSex())
+                .age(dto.getAge())
+                .situation(dto.getSituation())
+                .special(dto.getSpecial())
+                .color(dto.getColor())
+                .missingDate(missingDate)
+                .originUrl(dto.getOriginUrl())
+                .missingLocation(dto.getMissingLocation())
+                .rescueLocation(dto.getRescueLocation())
+                .rescueDate(rescueDate)
+                .rescueStatus(dto.getRescueStatus())
+                .guardianName(dto.getGuardianName())
+                .phoneNumber(dto.getPhoneNumber())
+                .isCompleted(dto.getIsCompleted())
                 .build();
 
         entityMap.put("missingAnimalVO", missingAnimalVO);
@@ -117,20 +134,27 @@ public interface AnimalService {
         missingAnimalDTO.setMissingLocation(missingAnimalVO.getMissingLocation());
         missingAnimalDTO.setRegDate(formatter.dateToString(missingAnimalVO.getRegDate()));
         missingAnimalDTO.setUpdateDate(formatter.dateToString(missingAnimalVO.getUpdateDate()));
-        missingAnimalDTO.setOriginURL(missingAnimalVO.getOriginUrl());
+        missingAnimalDTO.setOriginUrl(missingAnimalVO.getOriginUrl());
         missingAnimalDTO.setIsCompleted(missingAnimalVO.getIsCompleted());
 
 
 
         missingAnimalDTO.setSituation(missingAnimalVO.getSituation());
         missingAnimalDTO.setRescueStatus(missingAnimalVO.getRescueStatus());
-        missingAnimalDTO.setBno(missingAnimalVO.getBno());
         missingAnimalDTO.setGuardianName(missingAnimalVO.getGuardianName());
         missingAnimalDTO.setPhoneNumber(missingAnimalVO.getPhoneNumber());
 
         missingAnimalDTO.setRescueDate(formatter.dateToString(missingAnimalVO.getRescueDate()));
         missingAnimalDTO.setRescueLocation(missingAnimalVO.getRescueLocation());
         missingAnimalDTO.setIsCompleted(missingAnimalVO.getIsCompleted());
+
+//        System.out.println(images);
+//        System.out.println(images.size());
+
+        if(null == images.get(0) && 1 == images.size()) {
+
+            return missingAnimalDTO;
+        }
 
         //ImageVO -> ImageDTO
         List<ImageDTO> imageDTOList = images.stream().map(imageVO -> {
@@ -145,7 +169,6 @@ public interface AnimalService {
 
                 uploadPath = null;
             }
-
 
             return ImageDTO.builder()
                     .animalNumber(imageVO.getMissingAnimalVO().getAnimalNumber())

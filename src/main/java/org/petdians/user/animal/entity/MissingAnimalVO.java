@@ -1,8 +1,12 @@
 package org.petdians.user.animal.entity;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -12,6 +16,7 @@ import java.util.Date;
 @Getter
 @ToString
 @Table(name="tbl_animal")
+@EntityListeners(value={AuditingEntityListener.class})
 public class MissingAnimalVO {
 
     @Id
@@ -19,7 +24,8 @@ public class MissingAnimalVO {
     private Integer animalNumber;
 
     private String animalCode;
-    private String serviceName;
+    @Builder.Default
+    private String serviceName = "펫디언즈";
 
     private String type;
     private String name;
@@ -31,27 +37,37 @@ public class MissingAnimalVO {
     private String special;
     private String color;
 
-    private String imageType;
-
     // redirect할수 있는 원래 사이트
-    private String originUrl;
+    @Builder.Default
+    private String originUrl = "petdians";
 
-    private Date missingDate;
-    private String missingLocation;
+    @Builder.Default
+    private Date missingDate = null;
+    @Builder.Default
+    private String missingLocation = null;
 
-    private Date rescueDate;
-    private String rescueLocation;
+    @Builder.Default
+    private Date rescueDate = null;
+    @Builder.Default
+    private String rescueLocation = null;
 
     private String phoneNumber;
     private String guardianName;
-    private Integer bno;
 
+    @CreatedDate
+    @Column(name="regdate", updatable=false)
     private Date regDate;
-    private Date updateDate;
-    // 상태
-    private Integer rescueStatus;
-    private String situation;
 
-    private Integer isCompleted;
+
+    @LastModifiedDate
+    @Column(name="updatedate")
+    private Date updateDate;
+
+    // 상태
+    @Builder.Default
+    private Integer rescueStatus = 0;
+    private String situation;
+    @Builder.Default
+    private Integer isCompleted = 0;
 
 }
