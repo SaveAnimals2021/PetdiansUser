@@ -85,7 +85,9 @@
                 <!--/*@thymesVar id="list" type=""*/-->
                 <div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card" th:each="dto : ${result.dtoList}">
                     <div class="mdl-card__media">
-                        <img class="article-image" style= "width: 328px; height: 328px" th:src="|/animalImages/display?fileName=${dto.imageDTOList[0].getURL()}|" border="0" alt="">
+                        <img class="article-image" style= "width: 328px; height: 328px"
+                             th:if="${dto.imageDTOList.size() > 0 && dto.imageDTOList[0] != null}"
+                             th:src="|/animalImages/display?fileName=${dto.imageDTOList[0].getURL()}|" border="0" alt="">
                     </div>
                     <div class="mdl-card__title">
                         <h2 class="mdl-card__title-text">[[${dto.name}]]</h2>

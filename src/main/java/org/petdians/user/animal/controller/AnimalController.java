@@ -40,9 +40,6 @@ public class AnimalController {
 
         log.info("animalRegister Get.......................");
 
-        PageResultDTO result = service.getList(pageRequestDTO);
-        result.getDtoList().forEach(o -> log.info(o));
-
         model.addAttribute("result", service.getList(pageRequestDTO));
 
     }

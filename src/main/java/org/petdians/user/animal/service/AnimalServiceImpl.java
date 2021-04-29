@@ -58,11 +58,14 @@ public class AnimalServiceImpl implements AnimalService{
         MissingAnimalVO missingAnimalVO = (MissingAnimalVO) entityMap.get("missingAnimalVO");
         List<ImageVO> imageVOList = (List<ImageVO>) entityMap.get("imgList");
 
+        log.info(missingAnimalVO);
+        log.info(imageVOList);
+
         animalRepository.save(missingAnimalVO);
 
-        imageVOList.forEach(imageVO -> {
-            imageRepository.save(imageVO);
-        });
+//        imageVOList.forEach(imageVO -> {
+//            imageRepository.save(imageVO);
+//        });
 
         return missingAnimalVO.getAnimalNumber();
 

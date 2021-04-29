@@ -2,10 +2,7 @@ package org.petdians.user.animal.dto;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 enum RescueStatus{
@@ -24,7 +21,8 @@ public class MissingAnimalDTO {
     private Integer animalNumber;
 
     private String animalCode;
-    private String serviceName;
+    @Builder.Default
+    private String serviceName = "펫디언즈";
 
     private String type;
     private String name;
@@ -34,15 +32,15 @@ public class MissingAnimalDTO {
     private String sex; // 암컷
     private String age; // 2살
     private String special;
-    @Builder.Default
-    private String color = "미기재";
+
+    private String color;
 
     @Builder.Default
     private List<ImageDTO> imageDTOList = new ArrayList<>();
-    private String imageType;
 
     // redirect할수 있는 원래 사이트
-    private String originURL;
+    @Builder.Default
+    private String originUrl = "petdians";
 
     private String missingDate;
     private String missingLocation;
@@ -52,13 +50,14 @@ public class MissingAnimalDTO {
 
     private String phoneNumber;
     private String guardianName;
-    private Integer bno;
 
     private String regDate;
     private String updateDate;
     // 상태
     private Integer rescueStatus;
     private String situation;
+    @Builder.Default
+    private Integer isCompleted = 0;
 
     public String findMissingLocation(){
         String result = missingLocation;
@@ -69,7 +68,6 @@ public class MissingAnimalDTO {
 
         return result;
     }
-    private Integer isCompleted;
 
     public String getRescueStatusString(){
         String result = "";
