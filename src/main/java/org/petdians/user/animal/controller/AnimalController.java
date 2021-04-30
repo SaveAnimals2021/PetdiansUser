@@ -62,4 +62,13 @@ public class AnimalController {
 
     }
 
+    @GetMapping({"/read","/modify"})
+    public void getAnimalRead(PageRequestDTO pageRequestDTO, Model model) {
+
+        log.info("animalRead Get.......................");
+
+        model.addAttribute("result", service.getList(pageRequestDTO));
+
+    }
+
 }

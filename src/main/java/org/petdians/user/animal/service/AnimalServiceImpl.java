@@ -63,9 +63,9 @@ public class AnimalServiceImpl implements AnimalService{
 
         animalRepository.save(missingAnimalVO);
 
-//        imageVOList.forEach(imageVO -> {
-//            imageRepository.save(imageVO);
-//        });
+        imageVOList.forEach(imageVO -> {
+            imageRepository.save(imageVO);
+        });
 
         return missingAnimalVO.getAnimalNumber();
 

@@ -3,6 +3,12 @@
 
 <style>
 
+    .btnList, .imgBox{
+        display: flex;
+        justify-content: space-between;
+    }
+
+
     /*.mdl-textfield{*/
 
     /*    position: relative;*/
@@ -61,7 +67,7 @@
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                             <input name="missingDate" class="mdl-textfield__input" type="text" id="MissingDate">
-                            <label class="mdl-textfield__label" for="MissingDate">MissingDate - ex) 2021-04-27</label>
+                            <label class="mdl-textfield__label" for="MissingDate">MissingDate - ex)2021-04-27 24</label>
                         </div>
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                             <input name="type" class="mdl-textfield__input" pattern="[A-Z,a-z, ]*" type="text" id="Type">
@@ -109,27 +115,148 @@
                         </div>
 
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="align-content: revert">
-                            <input class="uploadFiles mdl-textfield__input" type="file" id="uploadFiles">
+<!--                            <input class="uploadFiles mdl-textfield__input" type="file" id="uploadFiles" multiple>-->
+                            <input type="file" class="uploadFiles custom-file-input files" id="uploadFiles" multiple>
+                            <label class="custom-file-label" data-browse="Browse"></label>
                         </div>
-                        <div class="imgBox">
-
-                        </div>
-
-
-                        <p>
-                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
-                                Register
-                            </button>
-                            <button class="listBtn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" style="background-color: #00bfa5">
-                                <a class="page-link" th:href="@{/animal/list}" tabindex="-1" style="color: white; text-decoration:none;">List</a>
-                            </button>
-                        </p>
                     </form>
+                    <div class="imgBox">
+                        <ul style="width: 100%">
+
+                        </ul>
+                    </div>
+                    <div class="btnList">
+                        <button class="registerBtn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
+                            Register
+                        </button>
+                        <button class="listBtn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" style="background-color: #00bfa5">
+                            <a class="page-link" th:href="@{/animal/list}" tabindex="-1" style="color: white; text-decoration:none;">List</a>
+                        </button>
+                    </div>
                 </div>
 
 
                 <script>
 
+                    const regex = new RegExp("(.*?)\.(exe|sh|zip|alz|tiff)$");
+                    const maxSize = 10485760; //10MB
+                    
+                    function ajax(url, obj){
+                        
+                        return fetch(url, obj).then(response => {
+
+                            if(!response.ok) {
+                                throw new Error(response)
+                            }
+                            return response.json();
+
+                        }).catch(error => {
+                            console.log("ERROR : " + error)
+                            console.log(error)
+                        });
+                        
+                        
+                    }
+
+                    //파일업로드 예외 체크
+                    function checkExtension(fileName, fileSize){
+
+                        if(fileSize >= maxSize){
+                            alert("파일 사이즈 초과");
+                            return false;
+                        }
+
+                        if(regex.test(fileName)){
+                            alert("해당 종류의 파일은 업로드할 수 없습니다.");
+                            return false;
+                        }
+                        return true;
+                    }
+                    //end function check
+
+                    //파일 업로드
+                    document.querySelector(".uploadFiles").addEventListener("change", function (e) {
+
+                        e.stopPropagation();
+
+                        const inputFile = this;
+                        console.log(inputFile);
+                        // const fileName = inputFile.value().split("\\").pop();
+
+                        const formData = new FormData;
+
+                        const files = inputFile.files;
+                        let appended = false;
+
+                        for (var i = 0; i < files.length; i++) {
+
+                            if(!checkExtension(files[i].name, files[i].size) ){
+                                return false;
+                            }
+
+                            console.log(files[i]);
+                            formData.append("uploadFiles", files[i]);
+                            appended = true;
+                        }
+
+                        //upload를 하지 않는다.
+                        if (!appended) {return;}
+
+                        //실제 업로드 부분
+                        //upload ajax
+                        const url = "/animalImages/uploadAjax";
+                        const obj = {
+                            method:'post',
+                            body:formData
+                        };
+
+                        const result = ajax(url, obj);
+                        result.then(json => {
+
+                            console.log(json);
+                            showResult(json);
+
+                        })
+
+                    }, false);
+                    //end addEvent upload
+
+                    //업로드 결과 이미지 표시
+                    function showResult(uploadResultArr){
+
+                        const uploadUL = document.querySelector(".imgBox ul");
+
+                        let str ="";
+
+                        uploadResultArr.forEach(obj => {
+
+                            str += "<div class='image' data-name='" + obj.fileName + "' data-path='" + obj.folderPath + "' data-uuid='" + obj.uuid + "' ";
+                            str += "style='display: flex; justify-content: space-between; margin-bottom: 20px;'>";
+                            str += "<img src='/animalImages/display?fileName=" + obj.thumbnailURL + "'>";
+                            str += "<div><button type='button' data-file=\'" + obj.imageURL + "\' "
+                            str += "class='btn-warning btn-sm''>X </button></div>";
+                            str += "</div>";
+                            str += "</li>";
+
+                        });
+
+                        uploadUL.insertAdjacentHTML("beforeend", str);
+
+                    }
+                    //end function showResult
+
+                    //업로드 파일 제거
+                    document.querySelector(".imgBox").addEventListener("click", function (e){
+
+                        const target = e.target;
+
+                        // if()
+
+
+
+                    }, false);
+
+                    //list 버튼 클릭
                     const listBtn = document.querySelector(".listBtn");
                     listBtn.addEventListener("click", function (e) {
 
@@ -138,7 +265,35 @@
 
                         window.location=listBtn.querySelector("a").getAttribute("href");
 
-                    }, false)
+                    }, false);
+                    //end addEvent list
+
+                    //register 버튼 클릭
+                    const registerBtn = document.querySelector(".registerBtn");
+                    registerBtn.addEventListener("click", function (e) {
+
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        let str = "";
+                        document.querySelectorAll(".image").forEach(function(obj, i){
+                            const target = obj;
+
+                            str += "<input type='hidden' name='imageDTOList["+i+"].fileName' value='"+target.getAttribute('data-name') +"'>";
+
+                            str += "<input type='hidden' name='imageDTOList["+i+"].uploadPath' value='"+target.getAttribute('data-path')+"'>";
+
+                            str += "<input type='hidden' name='imageDTOList["+i+"].uuid' value='"+target.getAttribute('data-uuid')+"'>";
+
+                        });
+
+                        const form = document.querySelector("form");
+                        form.insertAdjacentHTML("beforeend", str);
+                        form.submit();
+
+                    }, false);
+                    //end addEvent register
+
 
                 </script>
 

@@ -1,6 +1,9 @@
 package org.petdians.user.animal.entity;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,6 +15,7 @@ import java.util.Date;
 @Getter
 @Table(name="tbl_image")
 @ToString(exclude = "missingAnimalVO")
+@EntityListeners(value={AuditingEntityListener.class})
 public class ImageVO {
 
     @Id
@@ -26,7 +30,12 @@ public class ImageVO {
     private String fileName;
     private String type;
 
+    @CreatedDate
+    @Column(name="regdate", updatable=false)
     private Date regDate;
+
+    @LastModifiedDate
+    @Column(name="updatedate")
     private Date updateDate;
 
 }

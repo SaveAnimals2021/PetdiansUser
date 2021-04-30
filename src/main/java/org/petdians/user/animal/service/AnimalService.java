@@ -167,7 +167,8 @@ public interface AnimalService {
 
             } else {
 
-                uploadPath = null;
+//                uploadPath = null;
+                return null;
             }
 
             return ImageDTO.builder()

@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -16,6 +17,9 @@ public class ImageDTO {
     private String uploadPath;
     private String fileName;
     private String type;
+
+    protected LocalDateTime regDate;
+    protected LocalDateTime updateDate;
 
 
     public String getURL() {
