@@ -43,9 +43,9 @@ public interface AnimalService {
             switch (dto.getRescueStatus()) {
                 case 0: missingDate = format.parse(dto.getMissingDate());
                     break;
-                case 1: rescueDate = format.parse(dto.getRescueDate());
-                    break;
-                case 2: rescueDate = format.parse(dto.getRescueDate());
+                case 1:
+                case 2:
+                    rescueDate = format.parse(dto.getRescueDate());
                     break;
             }
 
@@ -91,17 +91,15 @@ public interface AnimalService {
 //                private String uploadPath;
 //                private String fileName;
 //                private String type;
-//
-//                private Date regDate;
-//                private Date updateDate;
 
                 ImageVO imageVO = ImageVO.builder()
-                        .missingAnimalVO(MissingAnimalVO.builder().animalNumber(imageDTO.getAnimalNumber()).build())
+                        .url(dto.getOriginUrl())
                         .uuid(imageDTO.getUuid())
                         .fileName(imageDTO.getFileName())
                         .uploadPath(imageDTO.getUploadPath())
                         .type(imageDTO.getType())
                         .build();
+
                 return imageVO;
 
             }).collect(Collectors.toList());
@@ -172,7 +170,6 @@ public interface AnimalService {
             }
 
             return ImageDTO.builder()
-                    .animalNumber(imageVO.getMissingAnimalVO().getAnimalNumber())
                     .fileName(imageVO.getFileName())
                     .uuid(imageVO.getUuid())
                     .type(imageVO.getType())

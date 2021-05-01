@@ -230,7 +230,7 @@
 
                         uploadResultArr.forEach(obj => {
 
-                            str += "<div class='image' data-name='" + obj.fileName + "' data-path='" + obj.folderPath + "' data-uuid='" + obj.uuid + "' ";
+                            str += "<div class='image' data-name='" + obj.fileName + "' data-path='" + obj.folderPath + "' data-uuid='" + obj.uuid + "'";
                             str += "style='display: flex; justify-content: space-between; margin-bottom: 20px;'>";
                             str += "<img src='/animalImages/display?fileName=" + obj.thumbnailURL + "'>";
                             str += "<div><button type='button' data-file=\'" + obj.imageURL + "\' "
@@ -251,7 +251,6 @@
                         const target = e.target;
 
                         // if()
-
 
 
                     }, false);
@@ -278,8 +277,14 @@
                         let str = "";
                         document.querySelectorAll(".image").forEach(function(obj, i){
                             const target = obj;
+                            console.log(target.getAttribute('data-name').indexOf(".")+1);
+
+                            // str += "<input type='hidden' name='imageDTOList["+i+"].animalNumber' value='"+target.getAttribute('data-animalNumber') +"'>";
 
                             str += "<input type='hidden' name='imageDTOList["+i+"].fileName' value='"+target.getAttribute('data-name') +"'>";
+
+                            str += "<input type='hidden' name='imageDTOList["+i+"].type' value='"+target.getAttribute('data-name')
+                                .substring(target.getAttribute('data-name').indexOf(".")+1) +"'>";
 
                             str += "<input type='hidden' name='imageDTOList["+i+"].uploadPath' value='"+target.getAttribute('data-path')+"'>";
 

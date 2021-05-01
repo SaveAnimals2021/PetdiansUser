@@ -56,15 +56,20 @@ public class AnimalServiceImpl implements AnimalService{
 
         Map<String, Object> entityMap = dtoToEntity(missingAnimalDTO);
         MissingAnimalVO missingAnimalVO = (MissingAnimalVO) entityMap.get("missingAnimalVO");
-        List<ImageVO> imageVOList = (List<ImageVO>) entityMap.get("imgList");
+        List<ImageVO> imageVOList = (List<ImageVO>) entityMap.get("imageVOList");
 
         log.info(missingAnimalVO);
         log.info(imageVOList);
 
-        animalRepository.save(missingAnimalVO);
+        //동물정보 등록
+        MissingAnimalVO result = animalRepository.save(missingAnimalVO);
 
+        //동물 이미지 정보 등록 - 등록한 동물 번호 이미지에 삽입
         imageVOList.forEach(imageVO -> {
+
+            imageVO.changeMissingAnimalVO(result.getAnimalNumber());
             imageRepository.save(imageVO);
+
         });
 
         return missingAnimalVO.getAnimalNumber();

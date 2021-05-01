@@ -24,7 +24,8 @@ public class ImageVO {
     private String url;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "animalNumber")
-    private MissingAnimalVO missingAnimalVO;
+    @Builder.Default
+    private MissingAnimalVO missingAnimalVO = null;
     private String uuid;
     private String uploadPath;
     private String fileName;
@@ -37,5 +38,13 @@ public class ImageVO {
     @LastModifiedDate
     @Column(name="updatedate")
     private Date updateDate;
+
+    public void changeMissingAnimalVO(Integer animalNumber) {
+
+        MissingAnimalVO missingAnimalVO = MissingAnimalVO.builder().animalNumber(animalNumber).build();
+
+        this.missingAnimalVO = missingAnimalVO;
+
+    }
 
 }

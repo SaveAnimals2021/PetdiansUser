@@ -12,15 +12,10 @@ import java.util.Date;
 @Builder
 public class ImageDTO {
 
-    private Integer animalNumber;
     private String uuid;
     private String uploadPath;
     private String fileName;
     private String type;
-
-    protected LocalDateTime regDate;
-    protected LocalDateTime updateDate;
-
 
     public String getURL() {
 
