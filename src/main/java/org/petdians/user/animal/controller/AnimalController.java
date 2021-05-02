@@ -54,9 +54,9 @@ public class AnimalController {
 
         log.info(missingAnimalDTO);
 
-        Integer animalNumber = service.register(missingAnimalDTO);
+        // Integer animalNumber = service.register(missingAnimalDTO);
 
-        redirectAttributes.addFlashAttribute("animalNumber", animalNumber);
+        // redirectAttributes.addFlashAttribute("animalNumber", animalNumber);
 
         return "redirect:/animal/read";
 
