@@ -54,6 +54,7 @@ public class AnimalUploadController {
             header.add("Content-Type", Files.probeContentType(file.toPath()));
             //파일 데이터 처리
             result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+
         } catch (Exception e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
