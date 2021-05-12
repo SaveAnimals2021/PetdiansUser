@@ -36,6 +36,13 @@
     /*    color: inherit;*/
     /*}*/
 
+    .animalMap {
+        margin: 8px;
+        max-width: 352px;
+        height: 328px;
+        background-color: white;
+    }
+
 </style>
 
 <th:block th:replace="~{/layout/basic :: setMainContent(~{this::content} )}">
@@ -48,7 +55,9 @@
                     <h2 class="mdl-card__title-text">Register</h2>
                 </div>
                 <div class="mdl-card__media">
-                    <img class="article-image" th:src="@{/images/contact-image2.jpg}" border="0" alt="">
+                    <!--                                    Map Div                                 -->
+                    <div class="animalMap"></div>
+<!--                    <img class="article-image" th:src="@{/images/contact-image2.jpg}" border="0" alt="">-->
                 </div>
                 <div class="mdl-card__supporting-text">
 <!--                    <p>-->
@@ -135,8 +144,13 @@
                     </div>
                 </div>
 
+                <script type="text/javascript"
+                        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=42b464dbc4f0eb1befb41f996f717a37&libraries=services,clusterer,drawing">
+                </script>
 
                 <script>
+
+                    <!--                    RegisterScript                                 -->
 
                     const regex = new RegExp("(.*?)\.(exe|sh|zip|alz|tiff)$");
                     const maxSize = 10485760; //10MB
@@ -300,6 +314,120 @@
                     }, false);
                     //end addEvent register
 
+                    <!--                            END Register Script                                 -->
+
+                    <!--                            Kakao Map                                 -->
+                    //KakaoMap 생성
+                    let mapContainer = document.querySelector('.animalMap'), // 지도를 표시할 div
+                        mapOption = {
+                            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                            level: 6 // 지도의 확대 레벨
+                        };
+
+                    let map = new kakao.maps.Map(mapContainer, mapOption);
+                    map.setMinLevel(3);
+
+                    //이 부분에서 에러 - input 입력값을 가져오지 못하고 있음
+                    const missingLocationInput = document.querySelector("input[name='missingLocation']");
+                    const missingLocation = document.querySelector("input[name='missingLocation']").value;
+                    console.log(missingLocation)
+
+                    //주소로 x,y 좌표 구하는 MapAPI
+                    function getMapByUrl(missingLocation) {
+
+                        return fetch("https://dapi.kakao.com/v2/local/search/keyword.json?query='" + missingLocation + "'",
+                            {
+                                method: 'get',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                    Authorization: 'KakaoAK 5898bb0d55f55b7be28aa94cce26efb0'
+                                },
+                            })
+                            .then(res => {
+
+                                if (!res.ok) {
+                                    console.log("=========== throws ==========")
+                                    throw new Error(res);
+                                }
+
+                                return res.json();
+
+                            }).catch(res => {
+                                console.log("============ catch ===============");
+                                return res;
+                            })
+                    }  //주소로 x,y 좌표 구하는 MapAPI END
+
+                    //Check Missing Location 버튼 클릭 시
+                    //1.MAP MARKER 만들기
+                    document.querySelector(".mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-button--accent").addEventListener("click", function () {
+                        makeResult(missingLocation, 0);
+                    }, false)
+
+                    //2.MAP MARKER 만들기
+                    function makeResult(missingLocation, count) {
+
+                        //console.log("============================================ Test Console =================================================================")
+                        //console.log(encodeURIComponent(animalDTO.imageDTOList[0].uploadPath + animalDTO.imageDTOList[0].fileName));
+
+                        let maxCount = 10;
+                        //missingLocation로 x,y 좌표 구하기
+                        let result = getMapByUrl(missingLocation);
+
+                        return result.then(res => {
+
+                            let val = res.documents;
+
+                            let missingLoc = missingLocation;
+
+                            //재검색
+                            if (0 == val.length) {
+
+                                let index = missingLoc.lastIndexOf(" ");
+                                if (-1 == index) {
+                                    console.log("결과 없음... 검색 완료" + missingLoc);
+                                }
+
+                                missingLoc = missingLoc.substring(0, index);
+                                missingLocation = missingLoc;
+
+                                if (count >= maxCount) {
+                                    console.log("결과 없음... 검색 완료" + missingLoc);
+                                    return;
+                                }
+
+                                ++count;
+                                console.log("결과 없음... 재검색 시작 =>" + missingLoc);
+                                makeResult(missingLocation, count)
+                                return;
+
+                            }//재검색 END
+
+                            //재검색이 끝나면 Marker 생성
+                            if (typeof (val[0]) != "undefined") {
+
+                                console.log("Marker 생성!!")
+                                let coords = new kakao.maps.LatLng(val[0].y, val[0].x);
+
+                                let marker = new kakao.maps.Marker({
+                                    map: map,
+                                    position: coords,
+                                });
+
+                                //좌표로 맵 중심 이동
+                                map.setCenter(coords);
+                                map.setLevel(3);
+
+                                return;
+
+                            }//Marker 생성 종료
+
+                        });
+
+                    }// 결과 생성 END
+
+
+                    <!--                           End Kakao Map                                 -->
 
                 </script>
 

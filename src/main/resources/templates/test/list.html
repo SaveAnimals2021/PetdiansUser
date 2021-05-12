@@ -85,9 +85,10 @@
     <th:block th:fragment="content">
 
         <main class="mdl-layout__content">
-            <!--                                    Map Div                                 -->
+<!--                                    Map Div                                 -->
             <div class="mapDiv">
-                <div class="animalMap"></div>
+                <div class="animalMap">
+                </div>
             </div>
 
             <div style="margin-left: 8px; margin-top: 8px;">
@@ -99,24 +100,23 @@
             <div class="mdl-grid portfolio-max-width">
                 <!--                                          Card                                                  -->
                 <!--/*@thymesVar id="list" type=""*/-->
-                <div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card" th:each="dto,index : ${result.dtoList}"
-                     style= "width: 108px; min-height: 108px; margin: 2px; margin-bottom: 10px;" th:block="${dto.animalNumber}">
-                    <div class="mdl-card__media" style= "width: 108px; height: 108px; padding: 4px; background-color: white;">
-                        <img class="article-image" style= "width: 100px; height: 100px"
+                <div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card" th:each="dto : ${result.dtoList}">
+                    <div class="mdl-card__media">
+                        <img class="article-image" style= "width: 328px; height: 328px"
                              th:if="${dto.imageDTOList.size() > 0 && dto.imageDTOList[0] != null}"
-                             th:src="|/animalImages/display?fileName=${dto.imageDTOList[0].getURL()}|" border="0" alt="No Image">
+                             th:src="|/animalImages/display?fileName=${dto.imageDTOList[0].getURL()}|" border="0" alt="">
                     </div>
-                    <div class="mdl-card__title" style="padding: 5px; padding-bottom: 0px">
-                        <p class="mdl-card__title-text" style="font-size: small;font-weight: bold;">Name</p>
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">[[${dto.name}]]</h2>
                     </div>
-                    <div class="mdl-card__title" style="padding: 5px;">
-                        <p class="mdl-card__title-text" style="font-size: small;font-weight: bold; color: cadetblue;">[[${dto.name}]]</p>
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">[[${dto.animalNumber}]]</h2>
                     </div>
-                    <div class="mdl-card__title" style="padding: 5px; padding-bottom: 0px">
-                        <p class="mdl-card__title-text" style="font-size: small;font-weight: bold;">Location</p>
+                    <div class="mdl-card__supporting-text">
+
                     </div>
-                    <div class="mdl-card__title" style="padding: 5px;">
-                        <p class="mdl-card__title-text" style="font-size: small;font-weight: bold; color: cadetblue;">[[${dto.missingLocation}]]</p>
+                    <div class="mdl-card__actions mdl-card--border">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent" style="justify-content: center; width: 90%" href="#">Read more</a>
                     </div>
                 </div>
                 <!--                                         End Card                                                  -->
@@ -151,27 +151,27 @@
         </main>
 
 
-        <!--        &lt;!&ndash;                                          Modal                                                  &ndash;&gt;-->
-        <!--        <div class="modal" tabindex="-1" role="dialog">-->
-        <!--            <div class="modal-dialog" role="document">-->
-        <!--                <div class="modal-content">-->
-        <!--                    <div class="modal-header">-->
-        <!--                        <h5 class="modal-title">Modal title</h5>-->
-        <!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-        <!--                            <span aria-hidden="true">&times;</span>-->
-        <!--                        </button>-->
-        <!--                    </div>-->
-        <!--                    <div class="modal-body">-->
-        <!--                        <p>Modal body text goes here.</p>-->
-        <!--                    </div>-->
-        <!--                    <div class="modal-footer">-->
-        <!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-        <!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
-        <!--        &lt;!&ndash;                                         End Modal                                                  &ndash;&gt;-->
+<!--        &lt;!&ndash;                                          Modal                                                  &ndash;&gt;-->
+<!--        <div class="modal" tabindex="-1" role="dialog">-->
+<!--            <div class="modal-dialog" role="document">-->
+<!--                <div class="modal-content">-->
+<!--                    <div class="modal-header">-->
+<!--                        <h5 class="modal-title">Modal title</h5>-->
+<!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                            <span aria-hidden="true">&times;</span>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    <div class="modal-body">-->
+<!--                        <p>Modal body text goes here.</p>-->
+<!--                    </div>-->
+<!--                    <div class="modal-footer">-->
+<!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash;                                         End Modal                                                  &ndash;&gt;-->
 
         <script type="text/javascript"
                 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=42b464dbc4f0eb1befb41f996f717a37&libraries=services,clusterer,drawing">
@@ -179,7 +179,6 @@
 
         <script th:inline="javascript">
 
-            //등록 버튼 클릭 시 페이지 이동
             const registerBtn = document.querySelector(".registerBtn");
             registerBtn.addEventListener("click", function (e) {
 
@@ -190,7 +189,6 @@
 
             } ,false)
 
-            //KakaoMap 생성
             let mapContainer = document.querySelector('.animalMap'), // 지도를 표시할 div
                 mapOption = {
                     center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -200,7 +198,6 @@
             let map = new kakao.maps.Map(mapContainer, mapOption);
             map.setMinLevel(3);
 
-            //마커위치 저장할 HashMap
             let animalMap = new Map();
 
             let dtoList = [[${result.dtoList}]];
@@ -378,31 +375,6 @@
 
             // ============= End Map ==========
 
-            //List 클릭 시 마커 이동 이벤트
-            document.querySelector(".mdl-grid.portfolio-max-width").addEventListener("click", function (e) {
-
-                const target = e.target.closest(".mdl-cell.mdl-card.mdl-shadow--4dp.portfolio-card");
-
-                //리스트를 누른 경우 => 지도를 이동
-                const customDiv = document.querySelectorAll(".card-img-top");
-                customDiv.forEach(a => {
-
-                    const card =  a.closest(".card");
-                    card.classList.remove("customHidden"); card.classList.add("customOpen");
-                    let animalNumber = target.getAttribute("block") * 1;
-
-                    console.log(animalMap);
-
-                    let value = animalMap.get(animalNumber);
-
-                    console.log(value);
-
-                    map.setLevel(3);
-                    map.setCenter(value.getPosition());
-
-                })
-
-            }, false)
 
         </script>
 

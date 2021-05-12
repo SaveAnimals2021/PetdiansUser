@@ -111,7 +111,10 @@
         })
 
         messaging.onMessage(function (payload) {
-            console.log("onMessage: " + payload);
+            console.log("onMessage: " + JSON.stringify(payload));
+            const test = JSON.stringify(payload);
+            const test2 = JSON.parse(test);
+            console.log(test2.notification.title);
         })
 
         const url = "https://fcm.googleapis.com/fcm/send";
@@ -120,8 +123,7 @@
                 notification :{
                     "body" : "새 포스트가 등록되었습니다.",
                     "title": "진격의巨鳥",
-                    "icon": "favicon.ico",
-
+                    "icon": "favicon.ico"
                 },
                 to : token
             }

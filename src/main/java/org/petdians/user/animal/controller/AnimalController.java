@@ -1,5 +1,6 @@
 package org.petdians.user.animal.controller;
 
+import com.google.gson.JsonArray;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.petdians.user.animal.dto.MissingAnimalDTO;
@@ -27,9 +28,28 @@ public class AnimalController {
         log.info("animalList.......................");
 
         PageResultDTO result = service.getList(pageRequestDTO);
-        //result.getDtoList().forEach(o -> log.info(o));
 
-        //result.getPageList().forEach(o -> log.info(o));
+        model.addAttribute("result", service.getList(pageRequestDTO));
+
+    }
+
+    @GetMapping("/list2")
+    public void getAnimalList2(PageRequestDTO pageRequestDTO, Model model) {
+
+        log.info("animalList.......................");
+
+        PageResultDTO result = service.getList(pageRequestDTO);
+
+        model.addAttribute("result", service.getList(pageRequestDTO));
+
+    }
+
+    @GetMapping("/list3")
+    public void getAnimalList3(PageRequestDTO pageRequestDTO, Model model) {
+
+        log.info("animalList.......................");
+
+        PageResultDTO result = service.getList(pageRequestDTO);
 
         model.addAttribute("result", service.getList(pageRequestDTO));
 
@@ -51,6 +71,7 @@ public class AnimalController {
 
         //animalCode = name + sex + species + age
         missingAnimalDTO.setAnimalCode(missingAnimalDTO.getName() + missingAnimalDTO.getSex() + missingAnimalDTO.getSpecies() + missingAnimalDTO.getAge());
+        missingAnimalDTO.getImageDTOList().forEach(imageDTO -> imageDTO.setUploadPath("C:\\upload\\" + imageDTO.getUploadPath()));
 
         log.info(missingAnimalDTO);
 

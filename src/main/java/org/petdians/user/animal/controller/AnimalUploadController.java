@@ -44,7 +44,7 @@ public class AnimalUploadController {
 
             log.info("fileName: " + srcFileName);
 
-            File file = new File(uploadPath +File.separator+ srcFileName);
+            File file = new File(uploadPath + File.separator + srcFileName);
 
             log.info("file: " + file);
 

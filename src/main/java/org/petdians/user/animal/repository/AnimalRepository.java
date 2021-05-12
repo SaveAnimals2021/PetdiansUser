@@ -13,6 +13,11 @@ public interface AnimalRepository extends JpaRepository<MissingAnimalVO, Integer
             "where animal.rescueStatus = 0 group by animal")
     Page<Object[]> getAnimalWithReplyCount(Pageable pageable);
 
+    @Query("select animal, min(image) from MissingAnimalVO animal " +
+            "left join ImageVO image on image.missingAnimalVO = animal " +
+            "where animal.rescueStatus = 0 group by animal")
+    Page<Object[]> getAnimalWithImage(Pageable pageable);
+
 
 
 

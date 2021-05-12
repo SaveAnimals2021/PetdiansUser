@@ -40,7 +40,7 @@ public class AnimalServiceImpl implements AnimalService{
 
         Page<Object[]> result = animalRepository.getAnimalWithReplyCount(pageable);
 
-        Function<Object[], MissingAnimalDTO> fn = (arr -> entitysToDTO((MissingAnimalVO)arr[0], (List<ImageVO>)(Arrays.asList((ImageVO)arr[1]))));
+        Function<Object[], MissingAnimalDTO> fn = ( arr -> entitysToDTO( (MissingAnimalVO)arr[0], (List<ImageVO>)(Arrays.asList((ImageVO)arr[1])) ) );
 
         return new PageResultDTO(result, fn);
     }
