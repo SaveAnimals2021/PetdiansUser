@@ -326,10 +326,14 @@
 
                     let map = new kakao.maps.Map(mapContainer, mapOption);
                     map.setMinLevel(3);
+                    
+                    let missingLocation = "";
+                    document.querySelector("input[name='missingLocation']").addEventListener("change", function (e) {
 
-                    //이 부분에서 에러 - input 입력값을 가져오지 못하고 있음
-                    const missingLocationInput = document.querySelector("input[name='missingLocation']");
-                    const missingLocation = document.querySelector("input[name='missingLocation']").value;
+                        missingLocation = e.target.value;
+
+                    }, false);
+
                     console.log(missingLocation)
 
                     //주소로 x,y 좌표 구하는 MapAPI
