@@ -9,6 +9,7 @@ import org.petdians.user.common.dto.PageResultDTO;
 import org.petdians.user.common.util.SimpleDateFormatter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,13 +20,13 @@ import java.util.stream.Collectors;
 
 public interface AnimalService {
 
-    PageResultDTO<MissingAnimalDTO, Object[]> getList(PageRequestDTO pageRequestDTO);
+    public PageResultDTO<MissingAnimalDTO, Object[]> getList(PageRequestDTO pageRequestDTO);
 
     public Page<Object[]> getAnimalList(Pageable pageable);
 
     public Integer register(MissingAnimalDTO missingAnimalDTO);
 
-
+    public MissingAnimalDTO getAnimal(Integer animalNumber);
 
     default Map<String, Object> dtoToEntity(MissingAnimalDTO dto){
 

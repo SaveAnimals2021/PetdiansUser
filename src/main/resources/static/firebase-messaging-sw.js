@@ -15,29 +15,13 @@ let firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const messaging = firebase.messaging();
-// messaging.setBackgroundMessageHandler(function(payload){
-//
-//     const title = "Hello World";
-//     const options = {
-//         body: payload.data.status
-//     };
-//
-//     return self.registration.showNotification(title,options);
-// });
 
-// messaging.setBackgroundMessageHandler(function(payload){
-//
-//     const title = "파이어베이스 테스트";
-//     const options = {
-//         body: payload.notification.body,
-//         icon: payload.notification.icon
-//     };
-//
-//     return self.registration.showNotification(title,options);
-// });
 
-messaging.onBackgroundMessage((payload) => {
+
+messaging.setBackgroundMessageHandler((payload) => {
+    console.log("ServiceWorker")
     console.log('[firebase-messaging-sw.js] Received background message ', payload);
+
     // Customize notification here
     const notificationTitle = 'Background Message Title';
     const notificationOptions = {
@@ -45,8 +29,7 @@ messaging.onBackgroundMessage((payload) => {
         icon: '/firebase-logo.png'
     };
 
-    self.registration.showNotification(notificationTitle,
-        notificationOptions);
+    self.registration.showNotification(notificationTitle,notificationOptions);
 });
 
 

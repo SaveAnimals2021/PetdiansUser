@@ -24,6 +24,14 @@ public class AnimalServiceTests {
     private AnimalService service;
 
     @Test
+    public void testGetAnimal() {
+
+        Integer animalNumber = 11913;
+        log.info(service.getAnimal(animalNumber));
+
+    }
+
+    @Test
     public void testGetAnimalList() {
 
         Pageable pageable = PageRequest.of(0,10, Sort.by("animalNumber").descending());

@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootTest
 @Log4j2
@@ -32,72 +33,32 @@ public class AnimalRepositoryTests {
     private ImageRepository imageRepository;
 
     @Test
-    public void testGetAnimalWithReplyCount() {
+    public void testGetAnimalWithImageList() {
 
-        Pageable pageable = PageRequest.of(0,10, Sort.by("animalnumber").descending());
+        Integer animalNumber = 11913;
+        List<Object[]> result = animalRepository.getAnimalWithImageList(animalNumber);
 
-        Page<Object[]> result = animalRepository.getAnimalWithReplyCount(pageable);
+        result.forEach(objects -> {
 
-        result.get().forEach(arr -> log.info(arr));
+            log.info(Arrays.toString(objects));
+
+        });
+
+    }
+
+    @Test
+    public void testGetAnimalListWithImage() {
+
+        Pageable pageable = PageRequest.of(0,10, Sort.by("animalNumber").descending());
+
+        Page<Object[]> result = animalRepository.getAnimalListWithImage(pageable);
+
+        result.get().forEach(arr -> log.info(Arrays.toString(arr)));
 
     }
 
     @Test
     public void testInsert() throws ParseException {
-
-//        private Integer animalNumber;
-//        private String animalCode;
-//        private String type;
-//        private String name;
-//        private String sex; // 암컷
-//        private String age; // 2살
-//        private String special;
-//        private String color;
-//        private Date missingDate;
-//        private String missingLocation;
-//        private String phoneNumber;
-//        private String guardianName;
-//
-//        @CreatedDate
-//        @Column(name="regdate", updatable=false)
-//        protected LocalDateTime regdate;
-
-//        @LastModifiedDate
-//        @Column(name="updatedate")
-//        protected LocalDateTime updatedate;
-//
-//        // 상태
-//        @Builder.Default
-//        private Integer rescueStatus = 0;
-//        private String situation;
-//        @Builder.Default
-//        private Integer isCompleted = 0;
-//        @Builder.Default
-//        private String serviceName = "펫디언즈";
-//        // redirect할수 있는 원래 사이트
-//        @Builder.Default
-//        private String originUrl = "/petdians";
-//        @Builder.Default
-//        private String species = "모름"; // 진도
-//        @Builder.Default
-//        private Date rescueDate = null;
-//        @Builder.Default
-//        private String rescueLocation = null;
-//        private Integer animalNumber;
-
-//        private String animalCode;
-//        private String type;
-//        private String name;
-//        private String sex; // 암컷
-//        private String age; // 2살
-//        private String special;
-//        private String color;
-//        private Date missingDate;
-//        private String missingLocation;
-//        private String phoneNumber;
-//        private String guardianName;
-
-
 
         String dateStr = "2021-04-15 15";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH");

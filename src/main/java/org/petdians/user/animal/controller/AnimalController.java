@@ -33,28 +33,6 @@ public class AnimalController {
 
     }
 
-    @GetMapping("/list2")
-    public void getAnimalList2(PageRequestDTO pageRequestDTO, Model model) {
-
-        log.info("animalList.......................");
-
-        PageResultDTO result = service.getList(pageRequestDTO);
-
-        model.addAttribute("result", service.getList(pageRequestDTO));
-
-    }
-
-    @GetMapping("/list3")
-    public void getAnimalList3(PageRequestDTO pageRequestDTO, Model model) {
-
-        log.info("animalList.......................");
-
-        PageResultDTO result = service.getList(pageRequestDTO);
-
-        model.addAttribute("result", service.getList(pageRequestDTO));
-
-    }
-
     @GetMapping("/register")
     public void getAnimalRegister(PageRequestDTO pageRequestDTO, Model model) {
 

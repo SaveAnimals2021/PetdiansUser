@@ -1,0 +1,149 @@
+<!doctype html>
+<!--
+  Material Design Lite
+  Copyright 2015 Google Inc. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<style>
+
+    .animalPagination{
+
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+    }
+
+    .page-item{
+
+        color: white;
+        text-decoration:none;
+
+    }
+
+    .pageBtn {
+
+        /*color: #fff;*/
+        /*background-color: mediumslateblue;*/
+
+        /*background: 0 0;*/
+        border: none;
+        border-radius: 2px;
+        /*position: relative;*/
+        /*height: 36px;*/
+        margin: 5px;
+        /*max-width: 20px;*/
+        /*min-width: 20px;*/
+        /*padding: 0 16px;*/
+        /*display: inline-block;*/
+        /*font-family: "Roboto","Helvetica","Arial",sans-serif;*/
+        font-size: 15px;
+        /*font-weight: 500;*/
+        /*text-transform: uppercase;*/
+        /*letter-spacing: 0;*/
+        /*overflow: hidden;*/
+        /*will-change: box-shadow;*/
+        /*transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1);*/
+        /*outline: none;*/
+        /*cursor: pointer;*/
+        /*text-decoration: none;*/
+        /*text-align: center;*/
+        /*line-height: 36px;*/
+        /*vertical-align: middle;*/
+
+    }
+
+</style>
+
+<th:block th:replace="~{/layout/basic :: setMainContent(~{this::content} )}">
+
+    <th:block th:fragment="content">
+
+        <!-- Add the entire Firebase JavaScript SDK -->
+        <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase.js"></script>
+
+        <script>
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            let firebaseConfig = {
+                apiKey: "AIzaSyCkVvqvnv-QxCKcL1CYRT1wT_dsg2epioE",
+                authDomain: "focused-elysium-308503.firebaseapp.com",
+                databaseURL: "https://focused-elysium-308503-default-rtdb.firebaseio.com",
+                projectId: "focused-elysium-308503",
+                storageBucket: "focused-elysium-308503.appspot.com",
+                messagingSenderId: "907968763197",
+                appId: "1:907968763197:web:d1fcf378adf80192dda154",
+                measurementId: "G-ZM6QQTCPG1"
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+
+            let apiToken = "";
+
+            const messaging = firebase.messaging();
+            messaging.usePublicVapidKey("BHRkjMoh0w2x_E2AwGorWXhPS3SJVdNa0Yvf2A4qLiIDmDFgMa3wTsiwCwc_ctykue6NkAmb6DIl6fc6-rQa0-4");
+            messaging.requestPermission()
+                .then(function () {
+                    console.log("Have permission");
+                    return messaging.getToken({ vapidKey: 'BHRkjMoh0w2x_E2AwGorWXhPS3SJVdNa0Yvf2A4qLiIDmDFgMa3wTsiwCwc_ctykue6NkAmb6DIl6fc6-rQa0-4' })
+                })
+                .then(function (token) {
+                    console.log(token);
+                    //apiToken = token;
+                    //"epHEbmQKNfpHdgM4evsM5T:APA91bGrL6wWJqCHw5hBH3TnvKG1LjkiyN-7t6Iv8ogPyCeK3OaiPxnM2Bx2q-UtYow_pD5tnwFKB6MPOjAQbW71V9B_c9MIzEyOLYAf7xuT5CJ1-W5OCz_esh8RhGHJDK6wHGHQDhjR"
+                    newPostPush(url, token);
+                })
+                .catch(function (err) {
+                    console.log("Error Occured." + err);
+                })
+
+            const url = "https://fcm.googleapis.com/fcm/send";
+            function newPostPush(url,token){
+
+                console.log("Push.......................")
+
+                const message = {
+                    notification :{
+                        "body" : "새 포스트가 등록되었습니다.",
+                        "title": "진격의巨鳥",
+                        "icon": "favicon.ico",
+                        "click_action" : "http://localhost:8080/animal/list"
+                    },
+                    to : token
+                }
+                fetch(url ,{
+                    method: 'POST',
+                    body: JSON.stringify(message),
+                    headers: new Headers({
+                        'Content-Type': 'application/json',
+                        'Authorization' : 'key=AAAA02cn1T0:APA91bEvTz9A0nxKWpmussphHduioNQPREKt3atj5nrAHV_sL_dIA07SzhsQQvi-Od5bzMIEAZvi5ut5cv1TCuXLC56yZD3AsySMP6I0ltKDWZb7BH0tHBqKSeW5tdWSWAOMIvSdgRZV'
+                    })
+                }).then(response => {
+                    if (response.status < 200 || response.status >= 400) {
+                        throw 'Error subscribing to topic: '+response.status + ' - ' + response.text();
+                    }
+                }).catch(e =>{
+                    console.log(e)
+                })
+            }
+
+        </script>
+
+    </th:block>
+</th:block>
+
+</html>

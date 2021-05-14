@@ -16,10 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 @Service
@@ -38,7 +35,7 @@ public class AnimalServiceImpl implements AnimalService{
 
         Pageable pageable = pageRequestDTO.getPageable(Sort.by("animalNumber").descending());
 
-        Page<Object[]> result = animalRepository.getAnimalWithReplyCount(pageable);
+        Page<Object[]> result = animalRepository.getAnimalListWithImage(pageable);
 
         Function<Object[], MissingAnimalDTO> fn = ( arr -> entitysToDTO( (MissingAnimalVO)arr[0], (List<ImageVO>)(Arrays.asList((ImageVO)arr[1])) ) );
 
@@ -47,7 +44,7 @@ public class AnimalServiceImpl implements AnimalService{
 
     @Override
     public Page<Object[]> getAnimalList(Pageable pageable) {
-        return animalRepository.getAnimalWithReplyCount(pageable);
+        return animalRepository.getAnimalListWithImage(pageable);
     }
 
     @Override
@@ -74,6 +71,23 @@ public class AnimalServiceImpl implements AnimalService{
 
         return missingAnimalVO.getAnimalNumber();
 
+    }
+
+    @Override
+    public MissingAnimalDTO getAnimal(Integer animalNumber) {
+
+        List<Object[]> result = animalRepository.getAnimalWithImageList(animalNumber);
+
+        MissingAnimalVO missingAnimalVO = (MissingAnimalVO) result.get(0)[0];
+
+        List<ImageVO> imageVOList = new ArrayList<>();
+
+        result.forEach(arr -> {
+            ImageVO imageVO = (ImageVO) arr[1];
+            imageVOList.add(imageVO);
+        });
+
+        return entitysToDTO(missingAnimalVO, imageVOList);
     }
 
 }

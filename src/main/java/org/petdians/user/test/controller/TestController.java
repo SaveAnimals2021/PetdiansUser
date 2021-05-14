@@ -1,10 +1,8 @@
-package org.petdians.user.controller;
+package org.petdians.user.test.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.petdians.user.common.dto.PageRequestDTO;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -15,9 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TestController {
 
     @GetMapping({"/testFCM"})
-    public void getTest() {
+    public void getTestFCM() {
 
-        log.info("testFCM");
+        log.info("testFCM............................");
+
+    }
+
+    @GetMapping({"/testSendFCM"})
+    public void getTestSendFCM() {
+
+        log.info("testSendFCM............................");
 
     }
 

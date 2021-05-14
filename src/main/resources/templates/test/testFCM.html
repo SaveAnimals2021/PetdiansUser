@@ -115,8 +115,19 @@
             const test = JSON.stringify(payload);
             const test2 = JSON.parse(test);
             console.log(test2.notification.title);
-        })
 
+            // Customize notification here
+            const notificationTitle = payload.notification.title;
+            const notificationOptions = {
+                body: payload.notification.body,
+                icon: payload.notification.icon,
+                click_action: payload.notification.click_action
+            };
+
+            var notification = new Notification(notificationTitle,notificationOptions, notificationOptions.click_action);;
+
+        })
+        
         const url = "https://fcm.googleapis.com/fcm/send";
         function newPostPush(url,token){
             const message = {
