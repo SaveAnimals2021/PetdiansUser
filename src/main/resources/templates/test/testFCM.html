@@ -77,6 +77,8 @@
     <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase.js"></script>
 
     <script>
+
+
         // Your web app's Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         let firebaseConfig = {
@@ -89,26 +91,65 @@
             appId: "1:907968763197:web:d1fcf378adf80192dda154",
             measurementId: "G-ZM6QQTCPG1"
         };
+
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
+        const messaging = firebase.messaging();
+
+        //서비스 워커 등록 함수
+        const registerSW = (registration) => {
+
+            messaging.useServiceWorker(registration);
+            // request notification permission and get token
+            console.log('Registration successful, scope is:',
+                registration.scope);
+
+            //TODO: ask For Permission To Receive Notifications
+            messaging.usePublicVapidKey("BHRkjMoh0w2x_E2AwGorWXhPS3SJVdNa0Yvf2A4qLiIDmDFgMa3wTsiwCwc_ctykue6NkAmb6DIl6fc6-rQa0-4");
+            messaging.requestPermission()
+                .then(function () {
+                    console.log("Have permission");
+                    return messaging.getToken({ vapidKey: 'BHRkjMoh0w2x_E2AwGorWXhPS3SJVdNa0Yvf2A4qLiIDmDFgMa3wTsiwCwc_ctykue6NkAmb6DIl6fc6-rQa0-4' })
+                })
+                .then(function (token) {
+                    console.log(token);
+                    //apiToken = token;
+                    const target = "dukaxNik96MCXbOl60XngB:APA91bFs1eGvrajYi995wLynpvPPc2NTdm9dtm12E71p7ZWpvsDVMSgArIL0-6k8rLdDKoxXWpyZOaqozk9GatONGeqh7-D5COeJfZtFwq76DVe0VhsqfyIXRFJ_e24glkeUSOWUDUcn";
+                    newPostPush(url, target);
+                })
+                .catch(function (err) {
+                    console.log("Error Occured." + err);
+                })
+
+        }
+
+        if ('serviceWorker' in navigator) {
+            //AWS Hosing에서 serviceWorker를 등록하려면 도메인 경로 설정을 해줘야한다.
+            navigator.serviceWorker.register('/petdians/firebase-messaging-sw.js')
+                .then((registration) => {
+
+                    registerSW(registration);
+
+                }).catch(function(err) {
+                console.log("================AWS Hosting ERROR===================")
+                console.log('Service worker registration failed, error:', err);
+
+                //localhost라서 Error인 경우
+                navigator.serviceWorker.register('/firebase-messaging-sw.js')
+                    .then((registration) => {
+
+                        registerSW(registration);
+
+                    }).catch(function(err) {
+                    console.log("================localhost ERROR===================")
+                    console.log('Service worker registration failed, error:', err);
+
+                    });
+
+                });
+        }
 
         let apiToken = "";
-
-        const messaging = firebase.messaging();
-        messaging.usePublicVapidKey("BHRkjMoh0w2x_E2AwGorWXhPS3SJVdNa0Yvf2A4qLiIDmDFgMa3wTsiwCwc_ctykue6NkAmb6DIl6fc6-rQa0-4");
-        messaging.requestPermission()
-        .then(function () {
-            console.log("Have permission");
-            return messaging.getToken({ vapidKey: 'BHRkjMoh0w2x_E2AwGorWXhPS3SJVdNa0Yvf2A4qLiIDmDFgMa3wTsiwCwc_ctykue6NkAmb6DIl6fc6-rQa0-4' })
-        })
-        .then(function (token) {
-            console.log(token);
-            //apiToken = token;
-            newPostPush(url, token);
-        })
-        .catch(function (err) {
-            console.log("Error Occured." + err);
-        })
 
         messaging.onMessage(function (payload) {
             console.log("onMessage: " + JSON.stringify(payload));
@@ -134,7 +175,8 @@
                 notification :{
                     "body" : "새 포스트가 등록되었습니다.",
                     "title": "진격의巨鳥",
-                    "icon": "favicon.ico"
+                    "icon": "favicon.ico",
+                    "click_action" : "https://petdians.tk/petdians/animal/list"
                 },
                 to : token
             }
