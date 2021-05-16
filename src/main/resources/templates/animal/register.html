@@ -144,9 +144,13 @@
                     </div>
                 </div>
 
+                <!--                KakaoMap API Key                -->
                 <script type="text/javascript"
                         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5c66a25243d67d74cdfa259a7f38860c&libraries=services,clusterer,drawing">
                 </script>
+                <!--                FCM API Key                -->
+                <!-- Add the entire Firebase JavaScript SDK -->
+                <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase.js"></script>
 
                 <script th:inline="javascript">
 
@@ -308,8 +312,15 @@
 
                         const form = document.querySelector("form");
                         form.insertAdjacentHTML("beforeend", str);
-                        console.log(form);
-                        form.submit();
+
+                        const url = "https://fcm.googleapis.com/fcm/send";
+                        const target = "foA1v12Ip2qnlb_GCeeV-T:APA91bE0qg3qpiro104ndwwINQ08fongP6OFzFOBv4-Qn8bJZqQG6bLpEN1X29_EwmVx8-Q2fY68tsOwVzeW7oPneO8u_U4ATW0SRc9_iMawV71hK0YlCrNVBhHLbyuw_YT87tCeuZFE";
+                        //const target = "dukaxNik96MCXbOl60XngB:APA91bFs1eGvrajYi995wLynpvPPc2NTdm9dtm12E71p7ZWpvsDVMSgArIL0-6k8rLdDKoxXWpyZOaqozk9GatONGeqh7-D5COeJfZtFwq76DVe0VhsqfyIXRFJ_e24glkeUSOWUDUcn";
+                        newPostPush(url, target);
+
+                        //console.log(form);
+                        //form.submit();
+
 
                     }, false);
                     //end addEvent register
@@ -491,7 +502,134 @@
 
                     <!--                           End Kakao Map                                 -->
 
+                <!--                           Firebase                                 -->
+
+                // Your web app's Firebase configuration
+                // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+                let firebaseConfig = {
+                    apiKey: "AIzaSyCkVvqvnv-QxCKcL1CYRT1wT_dsg2epioE",
+                    authDomain: "focused-elysium-308503.firebaseapp.com",
+                    databaseURL: "https://focused-elysium-308503-default-rtdb.firebaseio.com",
+                    projectId: "focused-elysium-308503",
+                    storageBucket: "focused-elysium-308503.appspot.com",
+                    messagingSenderId: "907968763197",
+                    appId: "1:907968763197:web:d1fcf378adf80192dda154",
+                    measurementId: "G-ZM6QQTCPG1"
+                };
+
+                // Initialize Firebase
+                firebase.initializeApp(firebaseConfig);
+                const messaging = firebase.messaging();
+
+                //서비스 워커 등록 함수
+                const registerSW = (registration) => {
+
+                    messaging.useServiceWorker(registration);
+                    // request notification permission and get token
+                    console.log('Registration successful, scope is:',
+                        registration.scope);
+
+                    //TODO: ask For Permission To Receive Notifications
+                    messaging.usePublicVapidKey("BHRkjMoh0w2x_E2AwGorWXhPS3SJVdNa0Yvf2A4qLiIDmDFgMa3wTsiwCwc_ctykue6NkAmb6DIl6fc6-rQa0-4");
+                    messaging.requestPermission()
+                        .then(function () {
+                            console.log("Have permission");
+                            return messaging.getToken({ vapidKey: 'BHRkjMoh0w2x_E2AwGorWXhPS3SJVdNa0Yvf2A4qLiIDmDFgMa3wTsiwCwc_ctykue6NkAmb6DIl6fc6-rQa0-4' })
+                        })
+                        .then(function (token) {
+                            console.log(token);
+                            //apiToken = token;
+                            // const target = "dukaxNik96MCXbOl60XngB:APA91bFs1eGvrajYi995wLynpvPPc2NTdm9dtm12E71p7ZWpvsDVMSgArIL0-6k8rLdDKoxXWpyZOaqozk9GatONGeqh7-D5COeJfZtFwq76DVe0VhsqfyIXRFJ_e24glkeUSOWUDUcn";
+                            // newPostPush(url, target);
+                        })
+                        .catch(function (err) {
+                            console.log("Error Occured." + err);
+                        })
+
+                }
+
+                if ('serviceWorker' in navigator) {
+                    //AWS Hosing에서 serviceWorker를 등록하려면 도메인 경로 설정을 해줘야한다.
+                    navigator.serviceWorker.register('/petdians/firebase-messaging-sw.js')
+                        .then((registration) => {
+
+                            registerSW(registration);
+
+                        }).catch(function(err) {
+                        console.log("================AWS Hosting ERROR===================")
+                        console.log('Service worker registration failed, error:', err);
+
+                        //localhost라서 Error인 경우
+                        navigator.serviceWorker.register('/firebase-messaging-sw.js')
+                            .then((registration) => {
+
+                                registerSW(registration);
+
+                            }).catch(function(err) {
+                            console.log("================localhost ERROR===================")
+                            console.log('Service worker registration failed, error:', err);
+
+                        });
+
+                    });
+                }
+
+                let apiToken = "";
+
+                messaging.onMessage(function (payload) {
+
+                    console.log("onMessage: " + JSON.stringify(payload));
+                    // let receiveMessage = JSON.stringify(payload);
+                    // receiveMessage = JSON.parse(receiveMessage);
+                    // console.log(receiveMessage.notification.title);
+
+                    // Customize notification here
+                    const notificationTitle = payload.notification.title;
+                    const notificationOptions = {
+                        body: payload.notification.body,
+                        click_action: payload.notification.click_action
+                    };
+
+                    var notification = new Notification(notificationTitle,notificationOptions, notificationOptions.click_action);;
+
+                })
+
+                function newPostPush(url,token){
+
+                    const missingLocation = document.querySelector("input[name='missingLocation']").value;
+                    const name = document.querySelector("input[name='name']").value;
+
+                    console.log(missingLocation)
+                    console.log(name)
+
+                    const message = {
+                        notification :{
+                            "body" : missingLocation,
+                            "title": name,
+                            "click_action" : "https://petdians.tk/petdians/animal/list"
+                        },
+                        to : token
+                    }
+
+                    fetch(url ,{
+                        method: 'POST',
+                        body: JSON.stringify(message),
+                        headers: new Headers({
+                            'Content-Type': 'application/json',
+                            'Authorization' : 'key=AAAA02cn1T0:APA91bEvTz9A0nxKWpmussphHduioNQPREKt3atj5nrAHV_sL_dIA07SzhsQQvi-Od5bzMIEAZvi5ut5cv1TCuXLC56yZD3AsySMP6I0ltKDWZb7BH0tHBqKSeW5tdWSWAOMIvSdgRZV'
+                        })
+                    }).then(response => {
+                        if (response.status < 200 || response.status >= 400) {
+                            throw 'Error subscribing to topic: '+response.status + ' - ' + response.text();
+                        }
+                    }).catch(e =>{
+                        console.log(e)
+                    })
+                }
+
                 </script>
+
+                <!--                          End Firebase                                 -->
 
             </div>
         </div>
