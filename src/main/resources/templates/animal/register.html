@@ -314,8 +314,8 @@
                         form.insertAdjacentHTML("beforeend", str);
 
                         const url = "https://fcm.googleapis.com/fcm/send";
-                        const target = "foA1v12Ip2qnlb_GCeeV-T:APA91bE0qg3qpiro104ndwwINQ08fongP6OFzFOBv4-Qn8bJZqQG6bLpEN1X29_EwmVx8-Q2fY68tsOwVzeW7oPneO8u_U4ATW0SRc9_iMawV71hK0YlCrNVBhHLbyuw_YT87tCeuZFE";
-                        //const target = "dukaxNik96MCXbOl60XngB:APA91bFs1eGvrajYi995wLynpvPPc2NTdm9dtm12E71p7ZWpvsDVMSgArIL0-6k8rLdDKoxXWpyZOaqozk9GatONGeqh7-D5COeJfZtFwq76DVe0VhsqfyIXRFJ_e24glkeUSOWUDUcn";
+                        //const target = "foA1v12Ip2qnlb_GCeeV-T:APA91bE0qg3qpiro104ndwwINQ08fongP6OFzFOBv4-Qn8bJZqQG6bLpEN1X29_EwmVx8-Q2fY68tsOwVzeW7oPneO8u_U4ATW0SRc9_iMawV71hK0YlCrNVBhHLbyuw_YT87tCeuZFE";
+                        const target = "dukaxNik96MCXbOl60XngB:APA91bFs1eGvrajYi995wLynpvPPc2NTdm9dtm12E71p7ZWpvsDVMSgArIL0-6k8rLdDKoxXWpyZOaqozk9GatONGeqh7-D5COeJfZtFwq76DVe0VhsqfyIXRFJ_e24glkeUSOWUDUcn";
                         newPostPush(url, target);
 
                         //console.log(form);
@@ -487,7 +487,7 @@
 
                                 console.log("Marker 생성!!")
                                 let coords = new kakao.maps.LatLng(val[0].y, val[0].x);
-                                    message = '<div style="padding:5px;">여기에 계신가요?!</div>';
+                                    message = '<div style="padding:5px;">이 위치 인가요?</div>';
 
                                 displayMarker(coords, message);
 
@@ -538,9 +538,6 @@
                         })
                         .then(function (token) {
                             console.log(token);
-                            //apiToken = token;
-                            // const target = "dukaxNik96MCXbOl60XngB:APA91bFs1eGvrajYi995wLynpvPPc2NTdm9dtm12E71p7ZWpvsDVMSgArIL0-6k8rLdDKoxXWpyZOaqozk9GatONGeqh7-D5COeJfZtFwq76DVe0VhsqfyIXRFJ_e24glkeUSOWUDUcn";
-                            // newPostPush(url, target);
                         })
                         .catch(function (err) {
                             console.log("Error Occured." + err);
