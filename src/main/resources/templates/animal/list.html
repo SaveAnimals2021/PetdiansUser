@@ -241,6 +241,15 @@
 
             }//MAP MARKER 만들기 END
 
+            //커스텀 오버레이 클릭 시 Read페이지로 이동
+            const getRead = function (animalNumber) {
+
+                console.log(animalNumber)
+
+                self.location="/animal/read?animalNumber=" + animalNumber;
+
+            };
+
             //2.MAP MARKER 만들기
             function makeResult(animalDTO, count, finish) {
 
@@ -304,12 +313,12 @@
                         if(animalDTO.imageDTOList[0] != null) {
                             console.log(animalDTO.imageDTOList[0].uploadPath)
 
-                            content = '<div class="col-md-4" style="max-width: 100%;"><div class="card customOpen"><img class="card-img-top" style="max-height: 25vh; width: 92%; padding: 5px"' +
+                            content = '<div class="col-md-4" style="max-width: 100%;"><div class="card customOpen" onclick="getRead('+ animalNum +')"><img class="card-img-top" style="max-height: 25vh; width: 92%; padding: 5px"' +
                                 'src="/animalImages/display?fileName=' + encodeURIComponent(animalDTO.imageDTOList[0].uploadPath + "\\" +animalDTO.imageDTOList[0].fileName) + '" alt="Card image cap">'+
                                 '<div class="card-body" style="margin: 5px"><p class="card-title mb-3" style="margin: 0rem!important; font-weight:bold;">Name: ' + animalDTO.name +
                                 '</p><p class="card-text" style="font-weight:bold;">Date: ' + animalDTO.missingDate +'시</p></div></div></div>'
                         } else {
-                            content = '<div class="col-md-4" style="max-width: 100%;"><div class="card customOpen"><img class="card-img-top" style="max-height: 25vh; "' +
+                            content = '<div class="col-md-4" style="max-width: 100%;"><div class="card customOpen" onclick="getRead('+ animalNum +')"><img class="card-img-top" style="max-height: 25vh; "' +
                                 'alt="No image">'+
                                 '<div class="card-body"><p class="card-title mb-3" style="margin: 0rem!important; font-weight:bold;">Name: ' + animalDTO.name +
                                 '</p><p class="card-text" style="font-weight:bold;">Date: ' + animalDTO.missingDate +'시</p></div></div></div>'
@@ -321,15 +330,9 @@
                         // 커스텀 오버레이를 생성합니다
                         let customOverlay = new kakao.maps.CustomOverlay({
                             position: position,
-                            content: content
+                            content: content,
+                            clickable: true
                         });
-
-                        //커스텀 오버레이 클릭 시 Hidden
-                        // kakao.maps.event.addListener(customOverlay, 'click', function (){
-                        //
-                        //     customOverlay.setVisible(false);
-                        //
-                        // }, false);
 
                         // 커스텀 오버레이를 지도에 표시합니다
                         customOverlay.setMap(map);
