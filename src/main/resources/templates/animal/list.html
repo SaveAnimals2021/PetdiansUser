@@ -246,7 +246,9 @@
 
                 console.log(animalNumber)
 
-                self.location="/animal/read?animalNumber=" + animalNumber;
+                self.location="/animal/read?animalNumber=" + animalNumber + "&page=" + [[${result.page}]] + "&" +
+                    "type=" + [[${pageRequestDTO.type}]] + "&" +
+                    "keyword=" + [[${pageRequestDTO.keyword}]];
 
             };
 
