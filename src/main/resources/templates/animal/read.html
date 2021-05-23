@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<style>
+
+    .btnList, .imgBox{
+        display: flex;
+        justify-content: space-between;
+    }
+
+
+    /*.mdl-textfield{*/
+
+    /*    position: relative;*/
+    /*    font-size: 16px;*/
+    /*    display: inline-block;*/
+    /*    box-sizing: border-box;*/
+    /*    width: 260px;*/
+    /*    max-width: 100%;*/
+    /*    margin: 0;*/
+    /*    padding: 20px 0;*/
+
+    /*}*/
+
+    /*.mdl-textfield__input {*/
+    /*    border: none;*/
+    /*    border-bottom: 1px solid rgba(0,0,0,.12);*/
+    /*    display: block;*/
+    /*    font-size: 16px;*/
+    /*    font-family: "Helvetica","Arial",sans-serif;*/
+    /*    margin: 0;*/
+    /*    padding: 4px 0;*/
+    /*    width: 90%;*/
+    /*    background: 0 0;*/
+    /*    text-align: left;*/
+    /*    color: inherit;*/
+    /*}*/
+
+    .animalMap {
+        margin: 8px;
+        max-width: 352px;
+        height: 328px;
+        background-color: white;
+    }
+
+</style>
+
+<th:block th:replace="~{/layout/basic :: setMainContent(~{this::content} )}">
+
+    <th:block th:fragment="content">
+
+        <div class="mdl-grid portfolio-max-width portfolio-contact">
+            <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp">
+                <div class="mdl-card__title" style="background-color: antiquewhite; margin: 8px; margin-bottom: 0;border-radius: 5px;">
+                    <h2 class="mdl-card__title-text" style="font-weight: bold;">Register</h2>
+                </div>
+                <div class="mdl-card__media" style="background-color: white">
+                    <!--                                    Map Div                                 -->
+                    <div class="animalMap"></div>
+                    <!--                    <img class="article-image" th:src="@{/images/contact-image2.jpg}" border="0" alt="">-->
+                </div>
+                <div class="mdl-card__supporting-text" style="padding-top: 0;">
+                    <!--                    <p>-->
+                    <!--                        Enim labore aliqua consequat ut quis ad occaecat aliquip incididunt. Sunt nulla eu enim irure enim nostrud aliqua consectetur ad consectetur sunt ullamco officia. Ex officia laborum et consequat duis.-->
+                    <!--                    </p>-->
+                    <!--                    <p>-->
+                    <!--                        Excepteur reprehenderit sint exercitation ipsum consequat qui sit id velit elit. Velit anim eiusmod labore sit amet.-->
+                    <!--                    </p>-->
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" style="background-color: mediumslateblue; margin-bottom: 5px;">
+                        Check Missing Location
+                    </button>
+                    <form th:action="@{/animal/register}" th:method="post" class="actionForm">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input name="missingLocation" class="mdl-textfield__input" type="text" id="MissingLocation">
+                            <label class="mdl-textfield__label" for="MissingLocation">MissingLocation</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input name="missingDate" class="mdl-textfield__input" type="text" id="MissingDate">
+                            <label class="mdl-textfield__label" for="MissingDate">MissingDate - ex)2021-04-27 24</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input name="type" class="mdl-textfield__input" pattern="[A-Z,a-z, ]*" type="text" id="Type">
+                            <label class="mdl-textfield__label" for="Type">Type</label>
+                            <span class="mdl-textfield__error">Letters and spaces only</span>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input name="name" class="mdl-textfield__input" pattern="[A-Z,a-z, ]*" type="text" id="Name">
+                            <label class="mdl-textfield__label" for="Name">Name</label>
+                            <span class="mdl-textfield__error">Letters and spaces only</span>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input name="species" class="mdl-textfield__input" type="text" id="Species">
+                            <label class="mdl-textfield__label" for="Species">Species</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input name="sex" class="mdl-textfield__input" type="text" id="Sex">
+                            <label class="mdl-textfield__label" for="Sex">Sex</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input name="age" class="mdl-textfield__input" type="text" id="Age">
+                            <label class="mdl-textfield__label" for="Age">Age</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input name="color" class="mdl-textfield__input" type="text" id="Color">
+                            <label class="mdl-textfield__label" for="Color">Color</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input name="phoneNumber" class="mdl-textfield__input" type="text" id="PhoneNumber">
+                            <label class="mdl-textfield__label" for="PhoneNumber">PhoneNumber</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input name="guardianName" class="mdl-textfield__input" type="text" id="GuardianName">
+                            <label class="mdl-textfield__label" for="GuardianName">GuardianName</label>
+                        </div>
+                        <input name="rescueStatus" class="mdl-textfield__input" type="hidden" value="0" id="RescueStatus">
+
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <textarea name="special" class="mdl-textfield__input" type="text" rows="5" id="Special"></textarea>
+                            <label class="mdl-textfield__label" for="Special">Special</label>
+                        </div>
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <textarea name="situation" class="mdl-textfield__input" type="text" rows="5" id="Situation"></textarea>
+                            <label class="mdl-textfield__label" for="Situation">Situation</label>
+                        </div>
+
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="align-content: revert">
+                            <!--                            <input class="uploadFiles mdl-textfield__input" type="file" id="uploadFiles" multiple>-->
+                            <input type="file" class="uploadFiles custom-file-input files" id="uploadFiles" multiple>
+                            <label class="custom-file-label" data-browse="Browse"></label>
+                        </div>
+                    </form>
+                    <div class="imgBox">
+                        <ul style="width: 100%">
+
+                        </ul>
+                    </div>
+                    <div class="btnList">
+                        <button class="registerBtn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
+                            Register
+                        </button>
+                        <button class="listBtn mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" style="background-color: #00bfa5">
+                            <a class="page-link" th:href="@{/animal/list}" tabindex="-1" style="color: white; text-decoration:none;">List</a>
+                        </button>
+                    </div>
+                </div>
+
+                <!--                KakaoMap API Key                -->
+                <script type="text/javascript"
+                        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5c66a25243d67d74cdfa259a7f38860c&libraries=services,clusterer,drawing">
+                </script>
+                <!--                FCM API Key                -->
+                <!-- Add the entire Firebase JavaScript SDK -->
+                <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase.js"></script>
+
+                <script th:inline="javascript">
+
+                    <!--                    RegisterScript                                 -->
+
+                    const regex = new RegExp("(.*?)\.(exe|sh|zip|alz|tiff)$");
+                    const maxSize = 10485760; //10MB
+
+                    function ajax(url, obj){
+
+                        return fetch(url, obj).then(response => {
+
+                            if(!response.ok) {
+                                throw new Error(response)
+                            }
+                            return response.json();
+
+                        }).catch(error => {
+                            console.log("ERROR : " + error)
+                            console.log(error)
+                        });
+
+
+                    }
+
+                    //파일업로드 예외 체크
+                    function checkExtension(fileName, fileSize){
+
+                        if(fileSize >= maxSize){
+                            alert("파일 사이즈 초과");
+                            return false;
+                        }
+
+                        if(regex.test(fileName)){
+                            alert("해당 종류의 파일은 업로드할 수 없습니다.");
+                            return false;
+                        }
+                        return true;
+                    }
+                    //end function check
+
+                    //파일 업로드
+                    document.querySelector(".uploadFiles").addEventListener("change", function (e) {
+
+                        e.stopPropagation();
+
+                        const inputFile = this;
+                        console.log(inputFile);
+                        // const fileName = inputFile.value().split("\\").pop();
+
+                        const formData = new FormData;
+
+                        const files = inputFile.files;
+                        let appended = false;
+
+                        for (var i = 0; i < files.length; i++) {
+
+                            if(!checkExtension(files[i].name, files[i].size) ){
+                                return false;
+                            }
+
+                            console.log(files[i]);
+                            formData.append("uploadFiles", files[i]);
+                            appended = true;
+                        }
+
+                        //upload를 하지 않는다.
+                        if (!appended) {return;}
+
+                        //실제 업로드 부분
+                        //upload ajax
+                        const url = "/animalImages/uploadAjax";
+                        const obj = {
+                            method:'post',
+                            body:formData
+                        };
+
+                        const result = ajax(url, obj);
+                        result.then(json => {
+
+                            console.log(json);
+                            showResult(json);
+
+                        })
+
+                    }, false);
+                    //end addEvent upload
+
+                    //업로드 결과 이미지 표시
+                    function showResult(uploadResultArr){
+
+                        const uploadUL = document.querySelector(".imgBox ul");
+
+                        let str ="";
+
+                        uploadResultArr.forEach(obj => {
+
+                            str += "<div class='image' data-name='" + obj.fileName + "' data-path='" + obj.folderPath + "' data-uuid='" + obj.uuid + "'";
+                            str += "style='display: flex; justify-content: space-between; margin-bottom: 20px;'>";
+                            str += "<img src='/animalImages/display?fileName=" + obj.thumbnailURL + "'>";
+                            str += "<div><button type='button' data-file=\'" + obj.imageURL + "\' "
+                            str += "class='btn-warning btn-sm''>X </button></div>";
+                            str += "</div>";
+                            str += "</li>";
+
+                        });
+
+                        uploadUL.insertAdjacentHTML("beforeend", str);
+
+                    }
+                    //end function showResult
+
+                    //업로드 파일 제거
+                    document.querySelector(".imgBox").addEventListener("click", function (e){
+
+                        const target = e.target;
+
+                        // if()
+
+
+                    }, false);
+
+                    //list 버튼 클릭
+                    const listBtn = document.querySelector(".listBtn");
+                    listBtn.addEventListener("click", function (e) {
+
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        window.location=listBtn.querySelector("a").getAttribute("href");
+
+                    }, false);
+                    //end addEvent list
+
+                    //register 버튼 클릭
+                    const registerBtn = document.querySelector(".registerBtn");
+                    registerBtn.addEventListener("click", function (e) {
+
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        let str = "";
+                        document.querySelectorAll(".image").forEach(function(obj, i){
+                            const target = obj;
+                            console.log(target.getAttribute('data-name').indexOf(".")+1);
+
+                            // str += "<input type='hidden' name='imageDTOList["+i+"].animalNumber' value='"+target.getAttribute('data-animalNumber') +"'>";
+
+                            str += "<input type='hidden' name='imageDTOList["+i+"].fileName' value='"+target.getAttribute('data-name') +"'>";
+
+                            str += "<input type='hidden' name='imageDTOList["+i+"].type' value='"+target.getAttribute('data-name')
+                                .substring(target.getAttribute('data-name').indexOf(".")+1) +"'>";
+
+                            str += "<input type='hidden' name='imageDTOList["+i+"].uploadPath' value='"+target.getAttribute('data-path')+"'>";
+
+                            str += "<input type='hidden' name='imageDTOList["+i+"].uuid' value='"+target.getAttribute('data-uuid')+"'>";
+
+                        });
+
+                        const form = document.querySelector("form");
+                        form.insertAdjacentHTML("beforeend", str);
+
+                        const url = "https://fcm.googleapis.com/fcm/send";
+                        //const target = "foA1v12Ip2qnlb_GCeeV-T:APA91bE0qg3qpiro104ndwwINQ08fongP6OFzFOBv4-Qn8bJZqQG6bLpEN1X29_EwmVx8-Q2fY68tsOwVzeW7oPneO8u_U4ATW0SRc9_iMawV71hK0YlCrNVBhHLbyuw_YT87tCeuZFE";
+                        const target = "dukaxNik96MCXbOl60XngB:APA91bFs1eGvrajYi995wLynpvPPc2NTdm9dtm12E71p7ZWpvsDVMSgArIL0-6k8rLdDKoxXWpyZOaqozk9GatONGeqh7-D5COeJfZtFwq76DVe0VhsqfyIXRFJ_e24glkeUSOWUDUcn";
+                        newPostPush(url, target);
+
+                        //console.log(form);
+                        //form.submit();
+
+
+                    }, false);
+                    //end addEvent register
+
+                    <!--                            END Register Script                                 -->
+
+                    <!--                            Kakao Map                                 -->
+                    //전역변수
+                    let marker = null;
+                    let infowindow = null;
+
+                    //KakaoMap 생성
+                    let mapContainer = document.querySelector('.animalMap'), // 지도를 표시할 div
+                        mapOption = {
+                            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                            level: 3 // 지도의 확대 레벨
+                        };
+
+                    let map = new kakao.maps.Map(mapContainer, mapOption);
+                    map.setMinLevel(3);
+
+                    // 지도에 마커와 인포윈도우를 표시하는 함수입니다
+                    function displayMarker(locPosition, message) {
+
+                        // 마커를 생성합니다
+                        marker = new kakao.maps.Marker({
+                            map: map,
+                            position: locPosition
+                        });
+
+                        let iwContent = message, // 인포윈도우에 표시할 내용
+                            iwRemoveable = true;
+
+                        // 인포윈도우를 생성합니다
+                        infowindow = new kakao.maps.InfoWindow({
+                            content : iwContent,
+                            removable : iwRemoveable
+                        });
+
+                        // 인포윈도우를 마커위에 표시합니다
+                        infowindow.open(map, marker);
+
+                        // 지도 중심좌표를 접속위치로 변경합니다
+                        map.setCenter(locPosition);
+                        map.setLevel(3);
+                    }
+
+                    //HTML5의 geolocation으로 사용할 수 있는지 확인
+                    if (navigator.geolocation) {
+
+                        //GeoLocation을 이용해서 접속 위치 확인
+                        navigator.geolocation.getCurrentPosition(function(position) {
+
+                            let lat = position.coords.latitude, // 위도
+                                lon = position.coords.longitude; // 경도
+
+                            let locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성
+                                message = '<div style="padding:5px;">이 위치 인가요?</div>'; // 인포윈도우에 표시될 내용
+
+                            //마커와 인포윈도우를 표시
+                            displayMarker(locPosition, message);
+
+                        });
+
+                    } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+
+                        let locPosition = new kakao.maps.LatLng(33.450701, 126.570667),
+                            message = '위치추적을 사용할수 없어요..'
+
+                        displayMarker(locPosition, message);
+                    }
+
+                    //실종장소 입력 시 value값 저장
+                    let missingLocation = "";
+                    document.querySelector("input[name='missingLocation']").addEventListener("change", function (e) {
+
+                        missingLocation = e.target.value;
+
+                    }, false);
+
+                    console.log(missingLocation)
+
+                    //주소로 x,y 좌표 구하는 MapAPI
+                    function getMapByUrl(missingLocation) {
+
+                        return fetch("https://dapi.kakao.com/v2/local/search/keyword.json?query='" + missingLocation + "'",
+                            {
+                                method: 'get',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                    Authorization: 'KakaoAK 5898bb0d55f55b7be28aa94cce26efb0'
+                                },
+                            })
+                            .then(res => {
+
+                                if (!res.ok) {
+                                    console.log("=========== throws ==========")
+                                    throw new Error(res);
+                                }
+
+                                return res.json();
+
+                            }).catch(res => {
+                                console.log("============ catch ===============");
+                                return res;
+                            })
+                    }  //주소로 x,y 좌표 구하는 MapAPI END
+
+                    //Check Missing Location 버튼 클릭 시
+                    //1.MAP MARKER 만들기
+                    document.querySelector(".mdl-button.mdl-js-button.mdl-button--raised.mdl-js-ripple-effect.mdl-button--accent").addEventListener("click", function () {
+
+                        //기존 마커 삭제
+                        if(marker != null) {
+
+                            infowindow.close();
+                            marker.setMap(null);
+
+                        }
+                        makeResult(missingLocation, 0);
+                    }, false)
+
+                    //2.MAP MARKER 만들기
+                    function makeResult(missingLocation, count) {
+
+                        //console.log("============================================ Test Console =================================================================")
+                        //console.log(encodeURIComponent(animalDTO.imageDTOList[0].uploadPath + animalDTO.imageDTOList[0].fileName));
+
+                        let maxCount = 10;
+                        //missingLocation로 x,y 좌표 구하기
+                        let result = getMapByUrl(missingLocation);
+
+                        return result.then(res => {
+
+                            let val = res.documents;
+
+                            let missingLoc = missingLocation;
+
+                            //재검색
+                            if (0 == val.length) {
+
+                                let index = missingLoc.lastIndexOf(" ");
+                                if (-1 == index) {
+                                    console.log("결과 없음... 검색 완료" + missingLoc);
+                                }
+
+                                missingLoc = missingLoc.substring(0, index);
+                                missingLocation = missingLoc;
+
+                                if (count >= maxCount) {
+                                    console.log("결과 없음... 검색 완료" + missingLoc);
+                                    return;
+                                }
+
+                                ++count;
+                                console.log("결과 없음... 재검색 시작 =>" + missingLoc);
+                                makeResult(missingLocation, count)
+                                return;
+
+                            }//재검색 END
+
+                            //재검색이 끝나면 Marker 생성
+                            if (typeof (val[0]) != "undefined") {
+
+                                console.log("Marker 생성!!")
+                                let coords = new kakao.maps.LatLng(val[0].y, val[0].x);
+                                message = '<div style="padding:5px;">이 위치 인가요?</div>';
+
+                                displayMarker(coords, message);
+
+                                return;
+
+                            }//Marker 생성 종료
+
+                        });
+
+                    }// 결과 생성 END
+
+
+                    <!--                           End Kakao Map                                 -->
+
+                    <!--                           Firebase                                 -->
+
+                    // Your web app's Firebase configuration
+                    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+                    let firebaseConfig = {
+                        apiKey: "AIzaSyCkVvqvnv-QxCKcL1CYRT1wT_dsg2epioE",
+                        authDomain: "focused-elysium-308503.firebaseapp.com",
+                        databaseURL: "https://focused-elysium-308503-default-rtdb.firebaseio.com",
+                        projectId: "focused-elysium-308503",
+                        storageBucket: "focused-elysium-308503.appspot.com",
+                        messagingSenderId: "907968763197",
+                        appId: "1:907968763197:web:d1fcf378adf80192dda154",
+                        measurementId: "G-ZM6QQTCPG1"
+                    };
+
+                    // Initialize Firebase
+                    firebase.initializeApp(firebaseConfig);
+                    const messaging = firebase.messaging();
+
+                    //서비스 워커 등록 함수
+                    const registerSW = (registration) => {
+
+                        messaging.useServiceWorker(registration);
+                        // request notification permission and get token
+                        console.log('Registration successful, scope is:',
+                            registration.scope);
+
+                        //TODO: ask For Permission To Receive Notifications
+                        messaging.usePublicVapidKey("BHRkjMoh0w2x_E2AwGorWXhPS3SJVdNa0Yvf2A4qLiIDmDFgMa3wTsiwCwc_ctykue6NkAmb6DIl6fc6-rQa0-4");
+                        messaging.requestPermission()
+                            .then(function () {
+                                console.log("Have permission");
+                                return messaging.getToken({ vapidKey: 'BHRkjMoh0w2x_E2AwGorWXhPS3SJVdNa0Yvf2A4qLiIDmDFgMa3wTsiwCwc_ctykue6NkAmb6DIl6fc6-rQa0-4' })
+                            })
+                            .then(function (token) {
+                                console.log(token);
+                            })
+                            .catch(function (err) {
+                                console.log("Error Occured." + err);
+                            })
+
+                    }
+
+                    if ('serviceWorker' in navigator) {
+                        //AWS Hosing에서 serviceWorker를 등록하려면 도메인 경로 설정을 해줘야한다.
+                        navigator.serviceWorker.register('/petdians/firebase-messaging-sw.js')
+                            .then((registration) => {
+
+                                registerSW(registration);
+
+                            }).catch(function(err) {
+                            console.log("================AWS Hosting ERROR===================")
+                            console.log('Service worker registration failed, error:', err);
+
+                            //localhost라서 Error인 경우
+                            navigator.serviceWorker.register('/firebase-messaging-sw.js')
+                                .then((registration) => {
+
+                                    registerSW(registration);
+
+                                }).catch(function(err) {
+                                console.log("================localhost ERROR===================")
+                                console.log('Service worker registration failed, error:', err);
+
+                            });
+
+                        });
+                    }
+
+                    let apiToken = "";
+
+                    messaging.onMessage(function (payload) {
+
+                        console.log("onMessage: " + JSON.stringify(payload));
+                        // let receiveMessage = JSON.stringify(payload);
+                        // receiveMessage = JSON.parse(receiveMessage);
+                        // console.log(receiveMessage.notification.title);
+
+                        // Customize notification here
+                        const notificationTitle = payload.notification.title;
+                        const notificationOptions = {
+                            body: payload.notification.body,
+                            click_action: payload.notification.click_action
+                        };
+
+                        var notification = new Notification(notificationTitle,notificationOptions, notificationOptions.click_action);;
+
+                    })
+
+                    function newPostPush(url,token){
+
+                        const missingLocation = document.querySelector("input[name='missingLocation']").value;
+                        const name = document.querySelector("input[name='name']").value;
+
+                        console.log(missingLocation)
+                        console.log(name)
+
+                        const message = {
+                            notification :{
+                                "body" : missingLocation,
+                                "title": name,
+                                "click_action" : "https://petdians.tk/petdians/animal/list"
+                            },
+                            to : token
+                        }
+
+                        fetch(url ,{
+                            method: 'POST',
+                            body: JSON.stringify(message),
+                            headers: new Headers({
+                                'Content-Type': 'application/json',
+                                'Authorization' : 'key=AAAA02cn1T0:APA91bEvTz9A0nxKWpmussphHduioNQPREKt3atj5nrAHV_sL_dIA07SzhsQQvi-Od5bzMIEAZvi5ut5cv1TCuXLC56yZD3AsySMP6I0ltKDWZb7BH0tHBqKSeW5tdWSWAOMIvSdgRZV'
+                            })
+                        }).then(response => {
+                            if (response.status < 200 || response.status >= 400) {
+                                throw 'Error subscribing to topic: '+response.status + ' - ' + response.text();
+                            }
+                        }).catch(e =>{
+                            console.log(e)
+                        })
+                    }
+
+                </script>
+
+                <!--                          End Firebase                                 -->
+
+            </div>
+        </div>
+
+    </th:block>
+</th:block>
+
+</html>
